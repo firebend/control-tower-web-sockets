@@ -2,6 +2,7 @@
   "version": 2,
   "projects": {
     "ct-rte-ws-sample": "apps/ct-rte-ws-sample",
-    "ct-rte-ws-sample-e2e": "apps/ct-rte-ws-sample-e2e"
+    "ct-rte-ws-sample-e2e": "apps/ct-rte-ws-sample-e2e",
+    "web-socket-client": "libs/web-socket-client"
   }
 }
