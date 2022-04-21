@@ -18,7 +18,10 @@
           "apps/ct-rte-ws-sample/src/favicon.ico",
           "apps/ct-rte-ws-sample/src/assets"
         ],
-        "styles": ["apps/ct-rte-ws-sample/src/styles.scss"],
+        "styles": [
+          "apps/ct-rte-ws-sample/src/styles.scss",
+          "node_modules/highlight.js/styles/monokai-sublime.css"
+        ],
         "scripts": []
       },
       "configurations": {

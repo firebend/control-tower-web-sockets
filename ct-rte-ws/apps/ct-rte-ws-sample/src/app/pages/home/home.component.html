@@ -1,0 +1,7 @@
+<div class="container" *ngIf="auth.isLoading$ | async; else loaded">
+  <ct-rte-ws-loading></ct-rte-ws-loading>
+</div>
+
+<ng-template #loaded>
+  <ct-rte-ws-home-content></ct-rte-ws-home-content>
+</ng-template>
