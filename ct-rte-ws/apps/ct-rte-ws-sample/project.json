@@ -1,0 +1,94 @@
+{
+  "projectType": "application",
+  "root": "apps/ct-rte-ws-sample",
+  "sourceRoot": "apps/ct-rte-ws-sample/src",
+  "prefix": "ct-rte-ws",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/ct-rte-ws-sample",
+        "index": "apps/ct-rte-ws-sample/src/index.html",
+        "main": "apps/ct-rte-ws-sample/src/main.ts",
+        "polyfills": "apps/ct-rte-ws-sample/src/polyfills.ts",
+        "tsConfig": "apps/ct-rte-ws-sample/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/ct-rte-ws-sample/src/favicon.ico",
+          "apps/ct-rte-ws-sample/src/assets"
+        ],
+        "styles": ["apps/ct-rte-ws-sample/src/styles.scss"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/ct-rte-ws-sample/src/environments/environment.ts",
+              "with": "apps/ct-rte-ws-sample/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "ct-rte-ws-sample:build:production"
+        },
+        "development": {
+          "browserTarget": "ct-rte-ws-sample:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "ct-rte-ws-sample:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/ct-rte-ws-sample/src/**/*.ts",
+          "apps/ct-rte-ws-sample/src/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/ct-rte-ws-sample"],
+      "options": {
+        "jestConfig": "apps/ct-rte-ws-sample/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
