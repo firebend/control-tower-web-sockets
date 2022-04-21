@@ -3,6 +3,16 @@
   "sourceRoot": "libs/web-socket-client/src",
   "projectType": "library",
   "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/web-socket-client",
+        "main": "libs/web-socket-client/src/index.ts",
+        "tsConfig": "libs/web-socket-client/tsconfig.lib.json",
+        "assets": ["libs/web-socket-client/*.md"]
+      }
+    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],

@@ -1,0 +1,7 @@
+{
+  "name": "@ct-rte-ws/web-socket-client",
+  "version": "0.0.1",
+  "dependencies": {
+    "@microsoft/signalr": "^6.0.4"
+  }
+}
