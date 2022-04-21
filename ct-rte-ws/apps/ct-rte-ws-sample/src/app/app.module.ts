@@ -52,15 +52,18 @@ import { environment as env } from '../environments/environment';
       provide: Window,
       useValue: window,
     },
-    // {
-    //   provide: HIGHLIGHT_OPTIONS,
-    //   useValue: {
-    //     coreLibraryLoader: () => import('highlight.js/lib/core'),
-    //     languages: {
-    //       json: () => import('highlight.js/lib/languages/json'),
-    //     },
-    //   },
-    // },
+    {
+      provide: HIGHLIGHT_OPTIONS,
+      useValue: {
+        // coreLibraryLoader: () => import('highlight.js/lib/core'),
+        // languages: {
+        //   json: () => import('highlight.js/lib/languages/json'),
+        // },
+        useValue: {
+          fullLibraryLoader: () => import('highlight.js'),
+        }
+      },
+    },
   ],
   bootstrap: [AppComponent],
 })
