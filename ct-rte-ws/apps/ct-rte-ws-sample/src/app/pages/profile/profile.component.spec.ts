@@ -7,11 +7,8 @@ import { ProfileComponent } from './profile.component';
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
-  let auth0ClientSpy: any;
 
   beforeEach(() => {
-    auth0ClientSpy = jasmine.createSpyObj('Auth0Client', ['loginWithRedirect']);
-
     TestBed.configureTestingModule({
       declarations: [ProfileComponent],
       imports: [],
@@ -19,13 +16,18 @@ describe('ProfileComponent', () => {
         {
           provide: HIGHLIGHT_OPTIONS,
           useValue: {
-            coreLibraryLoader: () => import('highlight.js/lib/highlight'),
+            coreLibraryLoader: () => import('highlight.js/lib/core'),
             languages: {
               json: () => import('highlight.js/lib/languages/json'),
             },
           },
         },
-        { provide: AuthService, useValue: auth0ClientSpy },
+        {
+          provide: AuthService,
+          useValue: {
+            loginWithRedirect: jest.fn(),
+          },
+        },
       ],
     }).compileComponents();
   });
