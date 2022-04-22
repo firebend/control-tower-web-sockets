@@ -4,12 +4,18 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ErrorComponent } from './pages/error/error.component';
 import { AuthGuard } from '@auth0/auth0-angular';
+import { EventsComponent } from './pages/events/events.component';
 
 const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'events',
+    component: EventsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'error',

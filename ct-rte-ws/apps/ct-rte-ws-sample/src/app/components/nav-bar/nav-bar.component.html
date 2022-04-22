@@ -67,15 +67,19 @@
                 {{ user.name }}
               </div>
               <a routerLink="/profile" class="dropdown-item dropdown-profile">
-                <!-- <fa-icon [icon]="faUser" class="mr-3"></fa-icon> -->
+                <fa-icon [icon]="faUser" class="mr-3"></fa-icon>
                 Profile
+              </a>
+              <a routerLink="/events" class="dropdown-item dropdown-profile">
+                <fa-icon [icon]="faBoltLightning" class="mr-3"></fa-icon>
+                Events
               </a>
               <button
                 (click)="logout()"
                 class="btn btn-link dropdown-item"
                 id="qsLogoutBtn"
               >
-                <!-- <fa-icon [icon]="faPowerOff" class="mr-3"></fa-icon> -->
+                <fa-icon [icon]="faPowerOff" class="mr-3"></fa-icon>
                 Log out
               </button>
             </div>
@@ -118,12 +122,12 @@
             </span>
           </li>
           <li>
-            <!-- <fa-icon [icon]="faUser" class="mr-3"></fa-icon> -->
+            <fa-icon [icon]="faUser" class="mr-3"></fa-icon>
             <a routerLink="/profile">Profile</a>
           </li>
 
           <li>
-            <!-- <fa-icon [icon]="faPowerOff" class="mr-3"></fa-icon> -->
+            <fa-icon [icon]="faPowerOff" class="mr-3"></fa-icon>
             <button
               class="btn btn-link p-0"
               id="qsLogoutBtn"

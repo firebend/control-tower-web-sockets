@@ -16,6 +16,7 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
 import { environment as env } from '../environments/environment';
+import { EventsComponent } from './pages/events/events.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { environment as env } from '../environments/environment';
     FooterComponent,
     HomeContentComponent,
     LoadingComponent,
-    ErrorComponent
+    ErrorComponent,
+    EventsComponent,
   ],
   imports: [
     BrowserModule,
