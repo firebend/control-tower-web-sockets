@@ -1,8 +1,10 @@
 <h3>Listening For Control Tower Platform Real Time Events</h3>
 
 <ul>
-  <li *ngFor="let item of realTimeEvents">
-    <span>{{item.eventName}}</span>
-    <span>{{item.eventTime}}</span>
-  </li>
+  <ng-template ngFor let-event [ngForOf]="realTimeEvents$ | async">
+    <li>
+      <strong>{{ event.eventName }}</strong>
+      <p>{{ event.eventTime }}</p>
+    </li>
+  </ng-template>
 </ul>

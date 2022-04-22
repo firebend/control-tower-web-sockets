@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 
 import {RealTimeEvent, realTimeEventFactory} from '@ct-rte-ws/web-socket-client'
-import { filter, firstValueFrom, map, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, filter, firstValueFrom, map, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'ct-rte-ws-events',
@@ -12,8 +12,7 @@ import { filter, firstValueFrom, map, switchMap, tap } from 'rxjs';
 export class EventsComponent implements OnInit {
 
   private readonly _authService: AuthService;
-
-  realTimeEvents : RealTimeEvent<unknown>[] = [];
+  realTimeEvents$ = new BehaviorSubject<RealTimeEvent<unknown>[]>([]);
 
   constructor(authService: AuthService) {
     this._authService = authService;
@@ -39,8 +38,10 @@ export class EventsComponent implements OnInit {
   }
 
   loadEventHandler(event: RealTimeEvent<unknown>) {
-    console.log('Received event: ', event);
-    this.realTimeEvents.push(event);
+    this.realTimeEvents$.next([
+      ...this.realTimeEvents$.getValue(),
+      ...[event]
+    ]);
   }
 
   /**
