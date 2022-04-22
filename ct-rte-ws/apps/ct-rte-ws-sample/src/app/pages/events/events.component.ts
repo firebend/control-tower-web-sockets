@@ -5,15 +5,7 @@ import {
   RealTimeEvent,
   realTimeEventFactory,
 } from '@ct-rte-ws/web-socket-client';
-import {
-  BehaviorSubject,
-  filter,
-  firstValueFrom,
-  interval,
-  map,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { BehaviorSubject, filter, firstValueFrom, map } from 'rxjs';
 
 @Component({
   selector: 'ct-rte-ws-events',
