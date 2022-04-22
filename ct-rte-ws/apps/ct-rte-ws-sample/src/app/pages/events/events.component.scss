@@ -1,0 +1,7 @@
+.events-container {
+  height: 600px; overflow: auto; display: flex; flex-direction: column-reverse
+}
+
+.events-list {
+  flex: 1 1 0
+}

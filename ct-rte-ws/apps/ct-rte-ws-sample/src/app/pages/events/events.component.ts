@@ -1,8 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 
-import {RealTimeEvent, realTimeEventFactory} from '@ct-rte-ws/web-socket-client'
-import { BehaviorSubject, filter, firstValueFrom, map, switchMap, tap } from 'rxjs';
+import {
+  RealTimeEvent,
+  realTimeEventFactory,
+} from '@ct-rte-ws/web-socket-client';
+import {
+  BehaviorSubject,
+  filter,
+  firstValueFrom,
+  interval,
+  map,
+  switchMap,
+  tap,
+} from 'rxjs';
 
 @Component({
   selector: 'ct-rte-ws-events',
@@ -10,7 +21,6 @@ import { BehaviorSubject, filter, firstValueFrom, map, switchMap, tap } from 'rx
   styleUrls: ['./events.component.scss'],
 })
 export class EventsComponent implements OnInit {
-
   private readonly _authService: AuthService;
   realTimeEvents$ = new BehaviorSubject<RealTimeEvent<unknown>[]>([]);
 
@@ -20,44 +30,46 @@ export class EventsComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForEvents()
-    .then(() => {
-      console.log('Registered for events');
-    })
-    .catch((err) => console.error(err));
+      .then(() => {
+        console.log('Registered for events');
+      })
+      .catch((err) => console.error(err));
   }
 
   async registerForEvents(): Promise<void> {
-
     const token = await this.getTokenAsync();
 
-    const eventBuilder = await realTimeEventFactory('http://localhost:5216/events')
+    const eventBuilder = await realTimeEventFactory(
+      'http://localhost:5216/events'
+    )
       .withAccessToken(token.token)
       .startAsync();
 
-    eventBuilder.onAll('loads', this.loadEventHandler);
+    eventBuilder.onAll('loads', (event) =>
+      this.loadEventHandler(event, this.realTimeEvents$)
+    );
   }
 
-  loadEventHandler(event: RealTimeEvent<unknown>) {
-    this.realTimeEvents$.next([
-      ...this.realTimeEvents$.getValue(),
-      ...[event]
-    ]);
+  loadEventHandler(
+    event: RealTimeEvent<unknown>,
+    sub: BehaviorSubject<RealTimeEvent<unknown>[]>
+  ) {
+    console.log('Loaded event', event);
+    sub.next([...sub.getValue(), ...[event]]);
   }
 
   /**
    * Converts the auth0 auth service raw token to a promise
    * @returns {Promise<string>}
    */
-  async getTokenAsync() : Promise<{token: string}> {
+  async getTokenAsync(): Promise<{ token: string }> {
     const token = await firstValueFrom(
-      this._authService
-      .idTokenClaims$
-      .pipe(
-        map(x => ({token: x?.__raw ?? ''})),
-        filter(x => !!x.token),
-      ));
+      this._authService.idTokenClaims$.pipe(
+        map((x) => ({ token: x?.__raw ?? '' })),
+        filter((x) => !!x.token)
+      )
+    );
 
-      return token;
+    return token;
   }
 }
-
