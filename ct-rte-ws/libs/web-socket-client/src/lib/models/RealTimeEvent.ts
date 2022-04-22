@@ -1,4 +1,4 @@
-import { EventTriggerTypes } from './EventTriggerTypes.js';
+import { EventTriggerTypes } from './EventTriggerTypes';
 
 export interface RealTimeEventFieldChange {
   path: string;

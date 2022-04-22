@@ -1,7 +1,7 @@
-import { IRealTimeConnection } from '../interfaces/IRealTimeConnection.js';
-import { EventTriggerTypes } from '../models/EventTriggerTypes.js';
-import { RealTimeEvent } from '../models/RealTimeEvent.js';
-import { RealTimeEventTriggerBuilder } from './RealTimeEventTriggerBuilder.js';
+import { IRealTimeConnection } from '../interfaces/IRealTimeConnection';
+import { EventTriggerTypes } from '../models/EventTriggerTypes';
+import { RealTimeEvent } from '../models/RealTimeEvent';
+import { RealTimeEventTriggerBuilder } from './RealTimeEventTriggerBuilder';
 
 export class RealTimeEventBuilder {
   private _eventName: string;

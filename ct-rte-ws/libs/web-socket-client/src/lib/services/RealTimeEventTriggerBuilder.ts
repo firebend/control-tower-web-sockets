@@ -1,6 +1,6 @@
-import { EventTriggerTypes } from '../models/EventTriggerTypes.js';
-import { ISubscriptionViewModelCreate } from '../models/SubscriptionViewModelCreate.js';
-import { RealTimeEventBuilder } from './RealTimeEventBuilder.js';
+import { EventTriggerTypes } from '../models/EventTriggerTypes';
+import { ISubscriptionViewModelCreate } from '../models/SubscriptionViewModelCreate';
+import { RealTimeEventBuilder } from './RealTimeEventBuilder';
 
 export class RealTimeEventTriggerBuilder {
   private readonly _realTimeEventBuilder: RealTimeEventBuilder;

@@ -1,10 +1,10 @@
 import { HubConnection } from '@microsoft/signalr';
-import { IRealTimeConnection } from '../interfaces/IRealTimeConnection.js';
-import { IModelSateResult } from '../models/ModelStateResult.js';
-import { RealTimeEvent } from '../models/RealTimeEvent.js';
-import { IResult } from '../models/Result.js';
-import { ISubscriptionViewModelCreate } from '../models/SubscriptionViewModelCreate.js';
-import { ISubscriptionViewModelRead } from '../models/SubscriptionViewModelRead.js';
+import { IRealTimeConnection } from '../interfaces/IRealTimeConnection';
+import { IModelSateResult } from '../models/ModelStateResult';
+import { RealTimeEvent } from '../models/RealTimeEvent';
+import { IResult } from '../models/Result';
+import { ISubscriptionViewModelCreate } from '../models/SubscriptionViewModelCreate';
+import { ISubscriptionViewModelRead } from '../models/SubscriptionViewModelRead';
 
 export class HubConnectionRealTimeConnection implements IRealTimeConnection {
   private _hubConnection: HubConnection;

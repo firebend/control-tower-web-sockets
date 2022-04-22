@@ -1,4 +1,4 @@
-import { IResult } from './Result.js';
+import { IResult } from './Result';
 
 export interface IModelError {
   propertyPath: string;

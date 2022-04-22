@@ -1,8 +1,8 @@
 import { HubConnectionBuilder } from '@microsoft/signalr';
-import { IRealTimeConnection } from '../interfaces/IRealTimeConnection.js';
-import { RealTimeEvent } from '../models/RealTimeEvent.js';
-import { HubConnectionRealTimeConnection } from './HubConnectionRealTimeConnection.js';
-import { RealTimeEventBuilder } from './RealTimeEventBuilder.js';
+import { IRealTimeConnection } from '../interfaces/IRealTimeConnection';
+import { RealTimeEvent } from '../models/RealTimeEvent';
+import { HubConnectionRealTimeConnection } from './HubConnectionRealTimeConnection';
+import { RealTimeEventBuilder } from './RealTimeEventBuilder';
 
 export class RealTimeEventsConnectionBuilder {
   private readonly _hubConnectionBuilder: HubConnectionBuilder;

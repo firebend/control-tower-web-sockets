@@ -1,4 +1,4 @@
-import { ISubscriptionViewModelCreate } from './SubscriptionViewModelCreate.js';
+import { ISubscriptionViewModelCreate } from './SubscriptionViewModelCreate';
 
 /**
  * Encapsulates information about an existing event subscription.

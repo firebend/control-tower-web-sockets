@@ -1,3 +1,5 @@
-export function webSocketClient(): string {
-  return 'web-socket-client';
+import { RealTimeEventsConnectionBuilder } from './services/RealTimeEventsConnectionBuilder';
+
+export function realTimeEventFactory(url: string): RealTimeEventsConnectionBuilder {
+  return new RealTimeEventsConnectionBuilder(url);
 }

@@ -1,1 +1,8 @@
-<p>events works!</p>
+<h3>Listening For Control Tower Platform Real Time Events</h3>
+
+<ul>
+  <li *ngFor="let item of realTimeEvents">
+    <span>{{item.eventName}}</span>
+    <span>{{item.eventTime}}</span>
+  </li>
+</ul>

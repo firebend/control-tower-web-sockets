@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '@auth0/auth0-angular';
+
+import {RealTimeEvent, realTimeEventFactory} from '@ct-rte-ws/web-socket-client'
+import { filter, firstValueFrom, map, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'ct-rte-ws-events',
@@ -6,7 +10,53 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./events.component.scss'],
 })
 export class EventsComponent implements OnInit {
-  constructor() {}
 
-  ngOnInit(): void {}
+  private readonly _authService: AuthService;
+
+  realTimeEvents : RealTimeEvent<unknown>[] = [];
+
+  constructor(authService: AuthService) {
+    this._authService = authService;
+  }
+
+  ngOnInit(): void {
+    this.registerForEvents()
+    .then(() => {
+      console.log('Registered for events');
+    })
+    .catch((err) => console.error(err));
+  }
+
+  async registerForEvents(): Promise<void> {
+
+    const token = await this.getTokenAsync();
+
+    const eventBuilder = await realTimeEventFactory('http://localhost:5216/events')
+      .withAccessToken(token.token)
+      .startAsync();
+
+    eventBuilder.onAll('loads', this.loadEventHandler);
+  }
+
+  loadEventHandler(event: RealTimeEvent<unknown>) {
+    console.log('Received event: ', event);
+    this.realTimeEvents.push(event);
+  }
+
+  /**
+   * Converts the auth0 auth service raw token to a promise
+   * @returns {Promise<string>}
+   */
+  async getTokenAsync() : Promise<{token: string}> {
+    const token = await firstValueFrom(
+      this._authService
+      .idTokenClaims$
+      .pipe(
+        map(x => ({token: x?.__raw ?? ''})),
+        filter(x => !!x.token),
+      ));
+
+      return token;
+  }
 }
+
