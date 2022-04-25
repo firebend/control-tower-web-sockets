@@ -21,6 +21,8 @@ import { MomentModule } from 'ngx-moment';
 import { EventsAllComponent } from './pages/events/events.all.component';
 import { BaseEventsComponent } from './pages/events/base.events.component';
 import { EventsCreateComponent } from './pages/events/events.create.component';
+import { EventsModifiedComponent } from './pages/events/events.modified.component';
+import { EventsModifiedFilterComponent } from './pages/events/events.modified.filter.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { EventsCreateComponent } from './pages/events/events.create.component';
     EventsAllComponent,
     EventsCreateComponent,
     EventModalComponent,
+    EventsModifiedComponent,
+    EventsModifiedFilterComponent,
   ],
   imports: [
     BrowserModule,

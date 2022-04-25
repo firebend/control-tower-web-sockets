@@ -6,6 +6,8 @@ import { ErrorComponent } from './pages/error/error.component';
 import { AuthGuard } from '@auth0/auth0-angular';
 import { EventsAllComponent } from './pages/events/events.all.component';
 import { EventsCreateComponent } from './pages/events/events.create.component';
+import { EventsModifiedComponent } from './pages/events/events.modified.component';
+import { EventsModifiedFilterComponent } from './pages/events/events.modified.filter.component';
 
 const routes: Routes = [
   {
@@ -21,6 +23,16 @@ const routes: Routes = [
   {
     path: 'events-create',
     component: EventsCreateComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'events-modified',
+    component: EventsModifiedComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'events-modified-filter',
+    component: EventsModifiedFilterComponent,
     canActivate: [AuthGuard]
   },
   {
