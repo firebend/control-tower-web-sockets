@@ -79,14 +79,7 @@ export class RealTimeEventsConnectionBuilder {
     callback: (event: RealTimeEvent<T>) => void
   ): RealTimeEventsConnectionBuilder {
     return this.on(eventName, builder =>
-      builder.onTrigger('Created', trigger => trigger.withFilter(undefined))
+      builder.onTrigger('Created').onTrigger('Modified').onTrigger('Deleted').withEventHandler(callback)
     )
-      .on(eventName, builder =>
-        builder.onTrigger('Modified', trigger => trigger.withFilter(undefined))
-      )
-      .on(eventName, builder =>
-        builder.onTrigger('Deleted', trigger => trigger.withFilter(undefined))
-      )
-      .on(eventName, builder => builder.withEventHandler(callback));
   }
 }
