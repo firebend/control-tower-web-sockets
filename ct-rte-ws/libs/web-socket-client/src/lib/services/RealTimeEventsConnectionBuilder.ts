@@ -43,11 +43,15 @@ export class RealTimeEventsConnectionBuilder {
 
     await this._connection.startAsync();
 
-    this._connection.onReconnected(() => {
-      this._builders.forEach(async builder => await builder.buildAsync());
-    });
+    this._connection.onReconnected(this._onReconnectedHandler);
 
     return this;
+  }
+
+  private async _onReconnectedHandler(){
+    for (let i = 0; i < this._builders.length; i++) {
+      await this._builders[i].buildAsync();
+    }
   }
 
   on(

@@ -17,6 +17,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
 import { environment as env } from '../environments/environment';
 import { EventsComponent } from './pages/events/events.component';
+import { EventModalComponent } from './components/event-modal/event-modal.component';
+import { MomentModule } from 'ngx-moment';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { EventsComponent } from './pages/events/events.component';
     LoadingComponent,
     ErrorComponent,
     EventsComponent,
+    EventModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,6 +40,7 @@ import { EventsComponent } from './pages/events/events.component';
     NgbModule,
     HighlightModule,
     FontAwesomeModule,
+    MomentModule,
     AuthModule.forRoot({
       ...env.auth,
       httpInterceptor: {
@@ -65,5 +69,6 @@ import { EventsComponent } from './pages/events/events.component';
     },
   ],
   bootstrap: [AppComponent],
+  entryComponents: [EventModalComponent],
 })
 export class AppModule {}

@@ -2191,18 +2191,6 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
-"@types/jasmine@*", "@types/jasmine@4.0.3":
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-4.0.3.tgz#097ce710d70eb7f3662e96c1f75824dd22c27d5c"
-  integrity sha512-Opp1LvvEuZdk8fSSvchK2mZwhVrsNT0JgJE9Di6MjnaIpmEXM8TLCPPrVtNTYh8+5MPdY8j9bAHMu2SSfwpZJg==
-
-"@types/jasminewd2@2.0.10":
-  version "2.0.10"
-  resolved "https://registry.yarnpkg.com/@types/jasminewd2/-/jasminewd2-2.0.10.tgz#ae31c237aa6421bde30f1058b1d20f4577e54443"
-  integrity sha512-J7mDz7ovjwjc+Y9rR9rY53hFWKATcIkrr9DwQWmOas4/pnIPJTXawnzjwpHm3RSxz/e3ZVUvQ7cRbd5UQLo10g==
-  dependencies:
-    "@types/jasmine" "*"
-
 "@types/jest@27.4.1":
   version "27.4.1"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-27.4.1.tgz#185cbe2926eaaf9662d340cc02e548ce9e11ab6d"
@@ -3532,11 +3520,6 @@ colorette@^2.0.10, colorette@^2.0.16:
   version "2.0.16"
   resolved "https://registry.npmjs.org/colorette/-/colorette-2.0.16.tgz"
   integrity sha512-hUewv7oMjCp+wkBv5Rm0v87eJhq4woh5rSR+42YSQJKecCqgIqNkZ6lAlQms/BwHPJA5NKMRlpxPRv0n8HQW6g==
-
-colors@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/colors/-/colors-1.4.0.tgz#c50491479d4c1bdaed2c9ced32cf7c7dc2360f78"
-  integrity sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA==
 
 combined-stream@^1.0.6, combined-stream@^1.0.8, combined-stream@~1.0.6:
   version "1.0.8"
@@ -5788,24 +5771,12 @@ jake@^10.8.5:
     filelist "^1.0.1"
     minimatch "^3.0.4"
 
-jasmine-core@4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-4.1.0.tgz#2377349b0e8bfd3fbdb36c9e4f09e3b1a17cf5c2"
-  integrity sha512-8E8BiffCL8sBwK1zU9cbavLe8xpJAgOduSJ6N8PJVv8VosQ/nxVTuXj2kUeHxTlZBVvh24G19ga7xdiaxlceKg==
-
 jasmine-marbles@~0.8.4:
   version "0.8.4"
   resolved "https://registry.npmjs.org/jasmine-marbles/-/jasmine-marbles-0.8.4.tgz"
   integrity sha512-zbtuXABpSWrSswYPiZ5m6EQhluNmKcRQs+82AqJHSN+PMx3ASpDmTvRfqe9Pk2hPh9Ge5zrzOsorIlw3kdwTXQ==
   dependencies:
     lodash "^4.17.20"
-
-jasmine-spec-reporter@7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/jasmine-spec-reporter/-/jasmine-spec-reporter-7.0.0.tgz#94b939448e63d4e2bd01668142389f20f0a8ea49"
-  integrity sha512-OtC7JRasiTcjsaCBPtMO0Tl8glCejM4J4/dNuOJdA8lBjz4PmWjYQ6pzb0uzpBNAWJMDudYuj9OdXJWqM2QTJg==
-  dependencies:
-    colors "1.4.0"
 
 jest-changed-files@^27.5.1:
   version "27.5.1"
@@ -6839,6 +6810,11 @@ mkdirp@^1.0.3, mkdirp@^1.0.4:
   resolved "https://registry.npmjs.org/mkdirp/-/mkdirp-1.0.4.tgz"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
+moment@^2.29.3:
+  version "2.29.3"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.3.tgz#edd47411c322413999f7a5940d526de183c031f3"
+  integrity sha512-c6YRvhEo//6T2Jz/vVtYzqBzwvPT95JBQ+smCytzf7c50oMZRsR/a4w88aD34I+/QVSfnoAnSBFPJHItlOMJVw==
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz"
@@ -6909,6 +6885,13 @@ ngx-highlightjs@6.1.2:
     highlight.js "^11.0.0"
     highlightjs-line-numbers.js "^2.8.0"
     tslib "^2.0.0"
+
+ngx-moment@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/ngx-moment/-/ngx-moment-6.0.2.tgz#7acba9830746e9c2862d261150f2c8adb20eb4f6"
+  integrity sha512-HUvDyoJPZKLA3tc+GMQqDpVyCVT2SPfEiV7/CGj2Dwwsn//JhhQ8eTr+RzKqBzLysrXkCwlzulVVJaJ5A0FJEA==
+  dependencies:
+    tslib "^2.3.0"
 
 nice-napi@^1.0.2:
   version "1.0.2"

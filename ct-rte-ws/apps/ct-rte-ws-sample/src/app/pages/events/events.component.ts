@@ -5,7 +5,9 @@ import {
   RealTimeEvent,
   realTimeEventFactory,
 } from '@ct-rte-ws/web-socket-client';
-import { BehaviorSubject, filter, firstValueFrom, map } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { BehaviorSubject, filter, firstValueFrom, interval, map } from 'rxjs';
+import { EventModalComponent } from '../../components/event-modal/event-modal.component';
 
 @Component({
   selector: 'ct-rte-ws-events',
@@ -14,18 +16,40 @@ import { BehaviorSubject, filter, firstValueFrom, map } from 'rxjs';
 })
 export class EventsComponent implements OnInit {
   private readonly _authService: AuthService;
+  private readonly _modalService: NgbModal
+
   realTimeEvents$ = new BehaviorSubject<RealTimeEvent<unknown>[]>([]);
 
-  constructor(authService: AuthService) {
+  constructor(authService: AuthService, ngbModal: NgbModal) {
     this._authService = authService;
+    this._modalService = ngbModal;
   }
 
   ngOnInit(): void {
-    this.registerForEvents()
-      .then(() => {
-        console.log('Registered for events');
-      })
-      .catch((err) => console.error(err));
+    // this.registerForEvents()
+    //   .then(() => {
+    //     console.log('Registered for events');
+    //   })
+    //   .catch((err) => console.error(err));
+
+    this.mockEvents();
+  }
+
+  mockEvents() {
+    interval(1_000).subscribe(() => {
+      this.loadEventHandler(
+        {
+          trigger: 'Created',
+          entity: {
+            loadNumber: '1',
+          },
+          eventName: 'loads',
+          eventTime: new Date().toISOString(),
+          fieldChanges: [],
+        },
+        this.realTimeEvents$
+      );
+    });
   }
 
   /**
@@ -71,5 +95,26 @@ export class EventsComponent implements OnInit {
     );
 
     return token;
+  }
+
+  getActiveClass(event: RealTimeEvent<unknown>): string {
+    switch (event.trigger) {
+      case 'Created':
+        return 'list-group-item-success';
+      case 'Modified':
+        return 'list-group-item-info';
+      case 'Deleted':
+        return 'list-group-item-danger';
+      default:
+        return '';
+    }
+  }
+
+  openModal(event: RealTimeEvent<unknown>): void {
+    const modal = this._modalService.open(EventModalComponent, {
+      backdrop: false,
+      scrollable: true,
+    });
+    modal.componentInstance.event = event;
   }
 }
