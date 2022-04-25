@@ -10,7 +10,7 @@
         [class]="getActiveClass(event)">
         <div class="d-flex w-100 justify-content-between">
           <h5 class="mb-1">{{event.eventName}}</h5>
-          <small>{{event.eventTime | amTimeAgo}}</small>
+          <small>{{event.eventTime | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}</small>
         </div>
         <p class="mb-1">{{event.trigger}}</p>
         <a (click)="openModal(event)">View Raw</a>
