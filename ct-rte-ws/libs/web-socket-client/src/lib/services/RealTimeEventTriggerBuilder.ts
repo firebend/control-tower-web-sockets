@@ -15,6 +15,11 @@ export class RealTimeEventTriggerBuilder {
     this._trigger = trigger;
   }
 
+  /**
+   * Adds a filter to the event subscription
+   * @param filter The filter to use
+   * @returns RealTimeEventTriggerBuilder
+   */
   withFilter(filter: string | undefined): RealTimeEventTriggerBuilder {
     this._subscriptions.push({
       trigger: this._trigger,
@@ -25,6 +30,7 @@ export class RealTimeEventTriggerBuilder {
     return this;
   }
 
+  /** @internal */
   async buildAsync(): Promise<void> {
     for (let i = 0; i < this._subscriptions.length; i++) {
       await this._realTimeEventBuilder.connection.registerForEventAsync(

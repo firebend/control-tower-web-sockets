@@ -14,6 +14,10 @@ export class RealTimeEventsConnectionBuilder {
     return this._connection;
   }
 
+  /**
+   * Create a new instance.
+   * @param url the url to Control Tower Platform Real Time Events Web Socket Module.
+   */
   constructor(url: string) {
     if (!url) {
       throw 'A url is required';
@@ -26,6 +30,11 @@ export class RealTimeEventsConnectionBuilder {
       .withAutomaticReconnect();
   }
 
+  /**
+   * Assigns the access token.
+   * @param token a promise that returns a string or a string that contains the JWT token for authorization
+   * @returns RealTimeEventsConnectionBuilder
+   */
   withAccessToken(
     token: Promise<string> | string
   ): RealTimeEventsConnectionBuilder {
@@ -36,6 +45,10 @@ export class RealTimeEventsConnectionBuilder {
     return this;
   }
 
+  /**
+   * Starts the web socket connection
+   * @returns RealTimeEventsConnectionBuilder
+   */
   async startAsync(): Promise<RealTimeEventsConnectionBuilder> {
     this._connection = new HubConnectionRealTimeConnection(
       this._hubConnectionBuilder.build()
@@ -54,6 +67,12 @@ export class RealTimeEventsConnectionBuilder {
     }
   }
 
+  /**
+   * Start listening for events with a given name.
+   * @param eventName the name of the event
+   * @param configure an callback handler to configure event triggers and filters
+   * @returns RealTimeEventsConnectionBuilder
+   */
   on(
     eventName: string,
     configure: (builder: RealTimeEventBuilder) => void
@@ -74,6 +93,12 @@ export class RealTimeEventsConnectionBuilder {
     return this;
   }
 
+  /**
+   * Registers an event handler for all event triggers for a given name.
+   * @param eventName The name of the event
+   * @param callback The callback to be invoked when the event is received
+   * @returns RealTimeEventsConnectionBuilder
+   */
   onAll<T>(
     eventName: string,
     callback: (event: RealTimeEvent<T>) => void

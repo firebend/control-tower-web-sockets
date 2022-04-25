@@ -14,6 +14,7 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
+    "stripInternal": true,
     "paths": {
       "@ct-rte-ws/web-socket-client": ["libs/web-socket-client/src/index.ts"]
     }

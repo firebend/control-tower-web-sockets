@@ -7,10 +7,16 @@ export class RealTimeEventBuilder {
   private _eventName: string;
   private _builders: RealTimeEventTriggerBuilder[] = [];
 
+  /**
+   * The configured event name
+   */
   get eventName(): string {
     return this._eventName;
   }
 
+  /**
+   * The real time connection
+   */
   connection: IRealTimeConnection;
 
   constructor(eventName: string, connection: IRealTimeConnection) {
@@ -18,6 +24,11 @@ export class RealTimeEventBuilder {
     this.connection = connection;
   }
 
+  /**
+   * Configures the callback handler to be invoked when the event is received
+   * @param callback the callback
+   * @returns RealTimeEventBuilder
+   */
   withEventHandler<T>(
     callback: (event: RealTimeEvent<T>) => void
   ): RealTimeEventBuilder {
@@ -25,6 +36,12 @@ export class RealTimeEventBuilder {
     return this;
   }
 
+  /**
+   * Adds a trigger to the event builder
+   * @param triggerType The trigger type
+   * @param configure An optional callback to configure the trigger
+   * @returns RealTimeEventBuilder
+   */
   onTrigger(
     triggerType: EventTriggerTypes,
     configure?: (builder: RealTimeEventTriggerBuilder) => void
@@ -39,6 +56,8 @@ export class RealTimeEventBuilder {
     return this;
   }
 
+
+  /** @internal */
   async buildAsync() {
     for (let i = 0; i < this._builders.length; i++) {
       await this._builders[i].buildAsync();

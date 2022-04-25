@@ -1,5 +1,5 @@
 /**
- * Encapsulates values an event subscription request.
+ * Encapsulates values an event subscription request
  */
 export interface ISubscriptionViewModelCreate {
   /**
@@ -13,7 +13,7 @@ export interface ISubscriptionViewModelCreate {
   eventName: string;
 
   /**
-   * An optional filter to limit events by.
+   * An optional filter to limit events by
    */
   filter: string | undefined;
 }

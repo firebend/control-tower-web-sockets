@@ -1,7 +1,7 @@
 import { ISubscriptionViewModelCreate } from './SubscriptionViewModelCreate';
 
 /**
- * Encapsulates information about an existing event subscription.
+ * Encapsulates information about an existing event subscription
  */
 export interface ISubscriptionViewModelRead
   extends ISubscriptionViewModelCreate {
