@@ -16,7 +16,8 @@ import { EventModalComponent } from '../../components/event-modal/event-modal.co
 })
 export class EventsComponent implements OnInit {
   private readonly _authService: AuthService;
-  private readonly _modalService: NgbModal
+  private readonly _modalService: NgbModal;
+  private readonly _doMockEvents = false;
 
   realTimeEvents$ = new BehaviorSubject<RealTimeEvent<unknown>[]>([]);
 
@@ -26,15 +27,20 @@ export class EventsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.registerForEvents()
-    //   .then(() => {
-    //     console.log('Registered for events');
-    //   })
-    //   .catch((err) => console.error(err));
-
-    this.mockEvents();
+    if (this._doMockEvents) {
+      this.mockEvents();
+    } else {
+      this.registerForEvents()
+        .then(() => {
+          console.log('Registered for events');
+        })
+        .catch((err) => console.error(err));
+    }
   }
 
+  /**
+   * Mocks events for testing.
+   */
   mockEvents() {
     interval(1_000).subscribe(() => {
       this.loadEventHandler(
@@ -97,6 +103,9 @@ export class EventsComponent implements OnInit {
     return token;
   }
 
+  /**
+   * Gets the bootstrap class for the event
+   */
   getActiveClass(event: RealTimeEvent<unknown>): string {
     switch (event.trigger) {
       case 'Created':
@@ -110,10 +119,16 @@ export class EventsComponent implements OnInit {
     }
   }
 
+  /**
+   * Opens a modal to display more information about the event.
+   * @param event the event to display in the modal
+   */
   openModal(event: RealTimeEvent<unknown>): void {
     const modal = this._modalService.open(EventModalComponent, {
       backdrop: false,
       scrollable: true,
+      centered: true,
+      size: 'xl'
     });
     modal.componentInstance.event = event;
   }
