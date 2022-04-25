@@ -27,10 +27,14 @@ export class RealTimeEventBuilder {
 
   onTrigger(
     triggerType: EventTriggerTypes,
-    configure: (builder: RealTimeEventTriggerBuilder) => void
+    configure?: (builder: RealTimeEventTriggerBuilder) => void
   ): RealTimeEventBuilder {
     const builder = new RealTimeEventTriggerBuilder(this, triggerType);
+
+    configure = configure || ((builder) => { builder.withFilter(undefined); });
+
     configure(builder);
+
     this._builders.push(builder);
     return this;
   }

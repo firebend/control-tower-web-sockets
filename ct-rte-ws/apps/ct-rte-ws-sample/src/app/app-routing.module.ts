@@ -4,7 +4,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ErrorComponent } from './pages/error/error.component';
 import { AuthGuard } from '@auth0/auth0-angular';
-import { EventsComponent } from './pages/events/events.component';
+import { EventsAllComponent } from './pages/events/events.all.component';
+import { EventsCreateComponent } from './pages/events/events.create.component';
 
 const routes: Routes = [
   {
@@ -13,8 +14,13 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'events',
-    component: EventsComponent,
+    path: 'events-all',
+    component: EventsAllComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'events-create',
+    component: EventsCreateComponent,
     canActivate: [AuthGuard]
   },
   {

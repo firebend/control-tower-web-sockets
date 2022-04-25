@@ -1,4 +1,4 @@
-<h3>Listening For Control Tower Platform Real Time Events</h3>
+<h3>{{title$ | async}}</h3>
 
 <div class="events-container">
   <div class="list-group"
@@ -10,7 +10,7 @@
         [class]="getActiveClass(event)">
         <div class="d-flex w-100 justify-content-between">
           <h5 class="mb-1">{{event.eventName}}</h5>
-          <small>{{event.eventTime | amTimeAgo}}</small>
+          <small>{{event.eventTime | amTimeAgo}}</small>
         </div>
         <p class="mb-1">{{event.trigger}}</p>
         <a (click)="openModal(event)">View Raw</a>

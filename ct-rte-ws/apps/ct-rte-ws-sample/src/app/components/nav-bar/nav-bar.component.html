@@ -70,9 +70,13 @@
                 <fa-icon [icon]="faUser" class="mr-3"></fa-icon>
                 Profile
               </a>
-              <a routerLink="/events" class="dropdown-item dropdown-profile">
+              <a routerLink="/events-all" class="dropdown-item dropdown-profile">
                 <fa-icon [icon]="faBoltLightning" class="mr-3"></fa-icon>
-                Events
+                Events All
+              </a>
+              <a routerLink="/events-create" class="dropdown-item dropdown-profile">
+                <fa-icon [icon]="faBoltLightning" class="mr-3"></fa-icon>
+                Events Create
               </a>
               <button
                 (click)="logout()"

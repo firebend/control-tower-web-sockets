@@ -16,9 +16,11 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
 import { environment as env } from '../environments/environment';
-import { EventsComponent } from './pages/events/events.component';
 import { EventModalComponent } from './components/event-modal/event-modal.component';
 import { MomentModule } from 'ngx-moment';
+import { EventsAllComponent } from './pages/events/events.all.component';
+import { BaseEventsComponent } from './pages/events/base.events.component';
+import { EventsCreateComponent } from './pages/events/events.create.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { MomentModule } from 'ngx-moment';
     HomeContentComponent,
     LoadingComponent,
     ErrorComponent,
-    EventsComponent,
+    BaseEventsComponent,
+    EventsAllComponent,
+    EventsCreateComponent,
     EventModalComponent,
   ],
   imports: [

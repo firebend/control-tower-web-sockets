@@ -1,23 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 
 import {
+  IRealTimeConnection,
   RealTimeEvent,
+  RealTimeEventBuilder,
   realTimeEventFactory,
+  RealTimeEventsConnectionBuilder,
 } from '@ct-rte-ws/web-socket-client';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BehaviorSubject, filter, firstValueFrom, interval, map } from 'rxjs';
 import { EventModalComponent } from '../../components/event-modal/event-modal.component';
 
 @Component({
-  selector: 'ct-rte-ws-events',
+  selector: 'ct-rte-ws-events-base',
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.scss'],
 })
-export class EventsComponent implements OnInit {
+export class BaseEventsComponent implements OnInit, OnDestroy {
   private readonly _authService: AuthService;
   private readonly _modalService: NgbModal;
   private readonly _doMockEvents = false;
+
+  private _connection: IRealTimeConnection | undefined;
+
+  public title$ = new BehaviorSubject<string>('');
 
   realTimeEvents$ = new BehaviorSubject<RealTimeEvent<unknown>[]>([]);
 
@@ -26,15 +33,15 @@ export class EventsComponent implements OnInit {
     this._modalService = ngbModal;
   }
 
-  ngOnInit(): void {
+  async ngOnDestroy(): Promise<void> {
+    await this._connection?.stopAsync();
+  }
+
+  async ngOnInit(): Promise<void> {
     if (this._doMockEvents) {
       this.mockEvents();
     } else {
-      this.registerForEvents()
-        .then(() => {
-          console.log('Registered for events');
-        })
-        .catch((err) => console.error(err));
+      await this._startWebSocketListener();
     }
   }
 
@@ -59,9 +66,10 @@ export class EventsComponent implements OnInit {
   }
 
   /**
-   * Registers for all load events
+   * Starts the real time events web socket listener and calls
+   * a protected method to subscribe to the events.
    */
-  async registerForEvents(): Promise<void> {
+  private async _startWebSocketListener(): Promise<void> {
     const token = await this.getTokenAsync();
 
     const eventBuilder = await realTimeEventFactory(
@@ -70,9 +78,24 @@ export class EventsComponent implements OnInit {
       .withAccessToken(token.token)
       .startAsync();
 
-    eventBuilder.onAll('loads', (event) =>
-      this.loadEventHandler(event, this.realTimeEvents$)
-    );
+    this._connection = eventBuilder.connection;
+
+    await this.subscribeToEvents(eventBuilder);
+  }
+
+  /**
+   * Called after the web socket connection is opened.
+   * Overriden in child classes to subscribe to events.
+   * @param connectionBuilder the connection builder to subscribe to events on
+   * @returns a promise
+   */
+  protected subscribeToEvents(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    connectionBuilder: RealTimeEventsConnectionBuilder
+  ): Promise<void> {
+    return new Promise<void>((resolve) => {
+      resolve();
+    });
   }
 
   /**
@@ -80,7 +103,7 @@ export class EventsComponent implements OnInit {
    * @param event the real time event that triggered
    * @param sub the behavior subject to push the event onto a list so that the front end updates
    */
-  loadEventHandler(
+  protected loadEventHandler(
     event: RealTimeEvent<unknown>,
     sub: BehaviorSubject<RealTimeEvent<unknown>[]>
   ) {
@@ -92,7 +115,7 @@ export class EventsComponent implements OnInit {
    * Converts the auth0 auth service raw token to a promise
    * @returns {Promise<string>}
    */
-  async getTokenAsync(): Promise<{ token: string }> {
+  protected async getTokenAsync(): Promise<{ token: string }> {
     const token = await firstValueFrom(
       this._authService.idTokenClaims$.pipe(
         map((x) => ({ token: x?.__raw ?? '' })),
@@ -128,7 +151,7 @@ export class EventsComponent implements OnInit {
       backdrop: false,
       scrollable: true,
       centered: true,
-      size: 'xl'
+      size: 'xl',
     });
     modal.componentInstance.event = event;
   }
