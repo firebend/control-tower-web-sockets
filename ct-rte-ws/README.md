@@ -1,12 +1,15 @@
 
 
-# CtRteWs
+# Control Tower Platform Real Time Web Sockets
 
 This project was generated using [Nx](https://nx.dev).
 
 <p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
 
 🔎 **Smart, Fast and Extensible Build System**
+
+# Project Layout
+This project scaffolds a library for connecting to the Control Tower Platform Real Time Web Sockets module. An Angular app is included to show a real working example of how the system works. You can also visit the library read me [here](../ct-rte-ws/libs//web-socket-client/README.md) to learn more about how it works. Nx documentation is listed below.
 
 ## Quick Start & Documentation
 
