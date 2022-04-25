@@ -23,5 +23,5 @@ export interface IRealTimeConnection {
 
   removeEventHandler(eventName: string): void;
 
-  onreconnected(callback: () => void): void;
+  onReconnected(callback: () => void): void;
 }

@@ -28,6 +28,9 @@ export class EventsComponent implements OnInit {
       .catch((err) => console.error(err));
   }
 
+  /**
+   * Registers for all load events
+   */
   async registerForEvents(): Promise<void> {
     const token = await this.getTokenAsync();
 
@@ -42,6 +45,11 @@ export class EventsComponent implements OnInit {
     );
   }
 
+  /**
+   * The event handler for when a load event is triggered
+   * @param event the real time event that triggered
+   * @param sub the behavior subject to push the event onto a list so that the front end updates
+   */
   loadEventHandler(
     event: RealTimeEvent<unknown>,
     sub: BehaviorSubject<RealTimeEvent<unknown>[]>

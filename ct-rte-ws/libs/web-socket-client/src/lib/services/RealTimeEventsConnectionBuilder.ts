@@ -8,6 +8,7 @@ export class RealTimeEventsConnectionBuilder {
   private readonly _hubConnectionBuilder: HubConnectionBuilder;
   private readonly _url;
   private _connection!: IRealTimeConnection;
+  private _builders: RealTimeEventBuilder[] = [];
 
   get connection(): IRealTimeConnection {
     return this._connection;
@@ -42,6 +43,10 @@ export class RealTimeEventsConnectionBuilder {
 
     await this._connection.startAsync();
 
+    this._connection.onReconnected(() => {
+      this._builders.forEach(async builder => await builder.buildAsync());
+    });
+
     return this;
   }
 
@@ -52,6 +57,8 @@ export class RealTimeEventsConnectionBuilder {
     const builder = new RealTimeEventBuilder(eventName, this._connection);
 
     configure(builder);
+
+    this._builders.push(builder);
 
     builder.buildAsync().then(
       // eslint-disable-next-line @typescript-eslint/no-empty-function

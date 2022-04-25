@@ -49,7 +49,7 @@ export class HubConnectionRealTimeConnection implements IRealTimeConnection {
     this._hubConnection.off(eventName);
   }
 
-  onreconnected(callback: () => void): void {
+  onReconnected(callback: () => void): void {
     this._hubConnection.onreconnected(callback);
   }
 }
