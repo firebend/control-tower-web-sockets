@@ -15,7 +15,7 @@
         "tsConfig": "apps/ct-rte-ws-sample/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
-          "apps/ct-rte-ws-sample/src/favicon.ico",
+          "apps/ct-rte-ws-sample/src/favicon.png",
           "apps/ct-rte-ws-sample/src/assets"
         ],
         "styles": [

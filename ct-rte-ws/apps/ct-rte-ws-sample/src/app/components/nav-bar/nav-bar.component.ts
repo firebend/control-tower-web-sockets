@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { faUser, faPowerOff, faBoltLightning } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faPowerOff, faBoltLightning, faFilter, faPlusCircle, faArrowsToCircle } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '@auth0/auth0-angular';
 import { DOCUMENT } from '@angular/common';
 
@@ -13,6 +13,9 @@ export class NavBarComponent {
   faUser = faUser;
   faPowerOff = faPowerOff;
   faBoltLightning = faBoltLightning;
+  faFilter = faFilter;
+  faPlusCircle = faPlusCircle;
+  faArrowsToCircle = faArrowsToCircle
 
   constructor(
     public auth: AuthService,
