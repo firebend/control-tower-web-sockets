@@ -4,7 +4,6 @@ import { AuthService } from '@auth0/auth0-angular';
 import {
   IRealTimeConnection,
   RealTimeEvent,
-  RealTimeEventBuilder,
   realTimeEventFactory,
   RealTimeEventsConnectionBuilder,
 } from '@ct-rte-ws/web-socket-client';
