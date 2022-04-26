@@ -10,6 +10,10 @@ export class HubConnectionRealTimeConnection implements IRealTimeConnection {
   private _hubConnection: HubConnection;
 
   constructor(hubConnection: HubConnection) {
+    if(!hubConnection){
+      throw 'A hubConnection is required';
+    }
+
     this._hubConnection = hubConnection;
   }
 

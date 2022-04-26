@@ -3,6 +3,7 @@ import { IRealTimeConnection } from '../interfaces/IRealTimeConnection';
 import { RealTimeEvent } from '../models/RealTimeEvent';
 import { HubConnectionRealTimeConnection } from './HubConnectionRealTimeConnection';
 import { RealTimeEventBuilder } from './RealTimeEventBuilder';
+import IsValidUrl from './UrlValidator';
 
 export class RealTimeEventsConnectionBuilder {
   private readonly _hubConnectionBuilder: HubConnectionBuilder;
@@ -19,8 +20,8 @@ export class RealTimeEventsConnectionBuilder {
    * @param url the url to Control Tower Platform Real Time Events Web Socket Module.
    */
   constructor(url: string) {
-    if (!url) {
-      throw 'A url is required';
+    if (!IsValidUrl(url)) {
+      throw 'A valid url is required';
     }
 
     this._url = url;

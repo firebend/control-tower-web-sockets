@@ -20,6 +20,14 @@ export class RealTimeEventBuilder {
   connection: IRealTimeConnection;
 
   constructor(eventName: string, connection: IRealTimeConnection) {
+    if(!eventName){
+      throw 'An event name is required';
+    }
+
+    if(!connection){
+      throw 'A connection is required';
+    }
+
     this._eventName = eventName;
     this.connection = connection;
   }

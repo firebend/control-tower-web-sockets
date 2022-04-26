@@ -11,6 +11,14 @@ export class RealTimeEventTriggerBuilder {
     realTimeEventBuilder: RealTimeEventBuilder,
     trigger: EventTriggerTypes
   ) {
+    if(!realTimeEventBuilder){
+      throw 'A real time event builder is required';
+    }
+
+    if(!trigger){
+      throw 'A trigger is required';
+    }
+
     this._realTimeEventBuilder = realTimeEventBuilder;
     this._trigger = trigger;
   }
