@@ -56,6 +56,7 @@ export class RealTimeEventBuilder {
   ): RealTimeEventBuilder {
     const builder = new RealTimeEventTriggerBuilder(this, triggerType);
 
+    //todo add a check that doesn't allow filters for created and deleted
     configure = configure || ((builder) => { builder.withFilter(undefined); });
 
     configure(builder);
