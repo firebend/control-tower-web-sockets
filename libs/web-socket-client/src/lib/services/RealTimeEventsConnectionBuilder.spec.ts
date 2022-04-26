@@ -46,4 +46,9 @@ describe('RealTimeEventsConnectionBuilder', () => {
     expect(connectionMock.start).toHaveBeenCalled();
     expect(connectionMock.onreconnected).toHaveBeenCalled();
   })
+
+  it('should add event handlers for all triggers', () => {
+    //todo
+    expect(true).toBeTruthy();
+  })
 });
