@@ -5,7 +5,7 @@ import { RealTimeEventBuilder } from './RealTimeEventBuilder';
 export class RealTimeEventTriggerBuilder {
   private readonly _realTimeEventBuilder: RealTimeEventBuilder;
   private readonly _trigger: EventTriggerTypes;
-  private _subscriptions: ISubscriptionViewModelCreate[] = [];
+  public readonly subscriptions: ISubscriptionViewModelCreate[] = [];
 
   constructor(
     realTimeEventBuilder: RealTimeEventBuilder,
@@ -29,7 +29,7 @@ export class RealTimeEventTriggerBuilder {
    * @returns RealTimeEventTriggerBuilder
    */
   withFilter(filter: string | undefined): RealTimeEventTriggerBuilder {
-    this._subscriptions.push({
+    this.subscriptions.push({
       trigger: this._trigger,
       filter: filter,
       eventName: this._realTimeEventBuilder.eventName,
@@ -40,9 +40,9 @@ export class RealTimeEventTriggerBuilder {
 
   /** @internal */
   async buildAsync(): Promise<void> {
-    for (let i = 0; i < this._subscriptions.length; i++) {
+    for (let i = 0; i < this.subscriptions.length; i++) {
       await this._realTimeEventBuilder.connection.registerForEventAsync(
-        this._subscriptions[i]
+        this.subscriptions[i]
       );
     }
   }

@@ -78,6 +78,12 @@ export class RealTimeEventsConnectionBuilder {
     eventName: string,
     configure: (builder: RealTimeEventBuilder) => void
   ): RealTimeEventsConnectionBuilder {
+
+    if(!this._connection)
+    {
+      throw 'A connection is required to register event handlers. Call startAsync() first.';
+    }
+
     const builder = new RealTimeEventBuilder(eventName, this._connection);
 
     configure(builder);

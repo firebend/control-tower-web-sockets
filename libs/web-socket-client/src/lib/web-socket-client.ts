@@ -7,6 +7,7 @@ export function realTimeEventFactory(
   if (IsValidUrl(url)) {
     return new RealTimeEventsConnectionBuilder(url);
   }
-
-  throw 'Could not create RealTimeEventsConnectionBuilder';
+  else{
+    throw 'A valid url is required';
+  }
 }
