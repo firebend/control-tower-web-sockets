@@ -1,3 +1,4 @@
+import { EventSubscriptionError } from '../errors/EventSubscriptionError';
 import { EventTriggerTypes } from '../models/EventTriggerTypes';
 import { ISubscriptionViewModelCreate } from '../models/SubscriptionViewModelCreate';
 import { RealTimeEventBuilder } from './RealTimeEventBuilder';
@@ -11,11 +12,11 @@ export class RealTimeEventTriggerBuilder {
     realTimeEventBuilder: RealTimeEventBuilder,
     trigger: EventTriggerTypes
   ) {
-    if(!realTimeEventBuilder){
+    if (!realTimeEventBuilder) {
       throw 'A real time event builder is required';
     }
 
-    if(!trigger){
+    if (!trigger) {
       throw 'A trigger is required';
     }
 
@@ -29,12 +30,14 @@ export class RealTimeEventTriggerBuilder {
    * @returns RealTimeEventTriggerBuilder
    */
   withFilter(filter: string | undefined): RealTimeEventTriggerBuilder {
-
-    if(filter && !filter.startsWith('/')){
+    if (filter && !filter.startsWith('/')) {
       throw 'A filter must start with a /';
     }
 
-    if(filter && (this._trigger === 'Created' || this._trigger === 'Deleted')){
+    if (
+      filter &&
+      (this._trigger === 'Created' || this._trigger === 'Deleted')
+    ) {
       throw 'A filter cannot be added to a Created or Deleted trigger';
     }
 
@@ -50,9 +53,18 @@ export class RealTimeEventTriggerBuilder {
   /** @internal */
   async buildAsync(): Promise<void> {
     for (let i = 0; i < this.subscriptions.length; i++) {
-      await this._realTimeEventBuilder.connection.registerForEventAsync(
-        this.subscriptions[i]
-      );
+      const result =
+        await this._realTimeEventBuilder.connection.registerForEventAsync(
+          this.subscriptions[i]
+        );
+
+      if (!result) {
+        throw 'Failed to register for event';
+      }
+
+      if (!result.wasSuccessful) {
+        throw new EventSubscriptionError(result.errors);
+      }
     }
   }
 }

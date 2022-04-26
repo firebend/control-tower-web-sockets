@@ -1,4 +1,5 @@
 import { IRealTimeConnection } from '../interfaces/IRealTimeConnection';
+import { IResult } from '../models/Result';
 import { ISubscriptionViewModelCreate } from '../models/SubscriptionViewModelCreate';
 import { RealTimeEventBuilder } from './RealTimeEventBuilder';
 import { RealTimeEventTriggerBuilder } from './RealTimeEventTriggerBuilder';
@@ -9,7 +10,9 @@ describe('RealTimeEventTriggerBuilder', () => {
 
   beforeEach(() => {
     realTimeConnection = {
-        registerForEventAsync: jest.fn(),
+        registerForEventAsync: jest.fn().mockResolvedValue({
+          wasSuccessful: true,
+        } as IResult<unknown>),
         addEventHandler: jest.fn(),
         removeEventHandler: jest.fn(),
         onReconnected: jest.fn(),
