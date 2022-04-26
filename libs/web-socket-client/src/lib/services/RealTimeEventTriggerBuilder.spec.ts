@@ -23,7 +23,7 @@ describe('RealTimeEventTriggerBuilder', () => {
       realTimeConnection
     );
 
-    realTimeEventTriggerBuilder = new RealTimeEventTriggerBuilder(realTimeEventBuilder, 'Created');
+    realTimeEventTriggerBuilder = new RealTimeEventTriggerBuilder(realTimeEventBuilder, 'Modified');
   });
 
   it('should add filter', async() => {
@@ -32,7 +32,7 @@ describe('RealTimeEventTriggerBuilder', () => {
     expect(realTimeEventTriggerBuilder.subscriptions.length).toBe(1);
 
     const expected = {
-      trigger: 'Created',
+      trigger: 'Modified',
       eventName: 'fake',
       filter: '/fakePath'
     } as ISubscriptionViewModelCreate;
@@ -43,4 +43,16 @@ describe('RealTimeEventTriggerBuilder', () => {
 
     expect(realTimeConnection.registerForEventAsync).toHaveBeenCalledWith(expected);
   });
+
+  it('should not add trigger with filter that has no leading slash', () => {
+    expect(() => realTimeEventTriggerBuilder.withFilter('fake/path')).toThrow();
+  })
+
+  it('should not add trigger with filter on Created', () => {
+    expect(() => realTimeEventTriggerBuilder.withFilter('fake/path')).toThrow();
+  })
+
+  it('should not add trigger with filter on Deleted', () => {
+    expect(() => realTimeEventTriggerBuilder.withFilter('fake/path')).toThrow();
+  })
 });

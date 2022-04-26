@@ -90,12 +90,10 @@ export class RealTimeEventsConnectionBuilder {
 
     this._builders.push(builder);
 
-    builder.buildAsync().then(
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      () => {},
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      () => {}
-    );
+    builder.buildAsync()
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+      .then(() => {})
+      .catch(e => {throw e});
 
     return this;
   }

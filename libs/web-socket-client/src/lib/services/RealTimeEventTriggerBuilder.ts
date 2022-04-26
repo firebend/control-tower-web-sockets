@@ -29,6 +29,15 @@ export class RealTimeEventTriggerBuilder {
    * @returns RealTimeEventTriggerBuilder
    */
   withFilter(filter: string | undefined): RealTimeEventTriggerBuilder {
+
+    if(filter && !filter.startsWith('/')){
+      throw 'A filter must start with a /';
+    }
+
+    if(filter && (this._trigger === 'Created' || this._trigger === 'Deleted')){
+      throw 'A filter cannot be added to a Created or Deleted trigger';
+    }
+
     this.subscriptions.push({
       trigger: this._trigger,
       filter: filter,

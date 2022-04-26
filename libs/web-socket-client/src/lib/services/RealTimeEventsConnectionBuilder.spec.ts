@@ -48,7 +48,7 @@ describe('RealTimeEventsConnectionBuilder', () => {
   })
 
   it('should add event handlers for all triggers', () => {
-    //todo
+    //TODO
     expect(true).toBeTruthy();
   })
 });

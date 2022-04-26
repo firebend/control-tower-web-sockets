@@ -19,6 +19,10 @@ export class RealTimeEventBuilder {
    */
   connection: IRealTimeConnection;
 
+  get builders(): RealTimeEventTriggerBuilder[] {
+    return this._builders;
+  }
+
   constructor(eventName: string, connection: IRealTimeConnection) {
     if(!eventName){
       throw 'An event name is required';
@@ -56,7 +60,6 @@ export class RealTimeEventBuilder {
   ): RealTimeEventBuilder {
     const builder = new RealTimeEventTriggerBuilder(this, triggerType);
 
-    //todo add a check that doesn't allow filters for created and deleted
     configure = configure || ((builder) => { builder.withFilter(undefined); });
 
     configure(builder);
