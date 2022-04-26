@@ -26,7 +26,7 @@ describe('RealTimeEventsConnectionBuilder', () => {
     });
   })
 
-  it('should start', async () => {
+  it('should start the connection and register reconnected handlers', async () => {
     const buildSpy = jest.spyOn(HubConnectionBuilder.prototype, 'build');
 
     const connectionMock = {
