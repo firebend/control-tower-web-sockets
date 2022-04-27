@@ -6,5 +6,13 @@
     "types": []
   },
   "include": ["**/*.ts"],
-  "exclude": ["**/*.spec.ts"]
+  "exclude": ["**/*.spec.ts"],
+  "typedocOptions": {
+    "name": "Control Tower Platform Web Sockets Client",
+    "out": "docs",
+    "exclude": ["**/*.spec.ts"],
+    "readme": "README.md",
+    "includes": "libs/web-socket-client",
+    "entryPoints": ["./libs/web-socket-client/index.ts"]
+  }
 }

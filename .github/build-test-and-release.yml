@@ -1,24 +1,49 @@
-name: Build and test
-
+name: Merge on Main
 on:
-  push:
+  pull_request:
     branches:
-      - 'main'
+      - main
+    types: [closed]
 
 jobs:
-  build_and_test:
-    name: Build and test
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
 
-      - uses: nrwl/nx-set-shas@v2
-      - run: npm ci
+    - uses: nrwl/nx-set-shas@v2
 
-      - run: npx nx workspace-lint
-      - run: npx nx format:check
-      - run: npx nx affected --target=lint --parallel=3
-      - run: npx nx affected --target=test --parallel=3 --ci --code-coverage
+    - run: npm ci
+    - run: npx nx workspace-lint
+    - run: npx nx format:check
+    - run: npx nx affected --target=lint --parallel=3
+    - run: npx nx affected --target=test --parallel=3 --ci --code-coverage
+
+    - name: Deploy
+      if: env.flag
+      env:
+        NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      run: |
+        npm config set //registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN
+        ./.github/scripts/pub.sh
+
+    # - name: Build Docs
+    #   if: env.flag
+    #   run: npm run docs ./libs/web-socket-client/src/index.ts --tsconfig ./libs/web-socket-client/tsconfig.lib.json
+
+    - name: Commit files
+      if: env.flag
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git commit -m "Release [skip-ci]" -a || true
+
+    - name: Push changes
+      if: env.flag
+      uses: ad-m/github-push-action@master
+      with:
+        tags: true
+        force: true

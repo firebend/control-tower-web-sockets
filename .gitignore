@@ -40,3 +40,4 @@ Thumbs.db
 
 .angular
 apps/ct-rte-ws-sample/src/environments/auth-config.ts
+docs
