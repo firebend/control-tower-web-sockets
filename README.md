@@ -62,7 +62,7 @@ Libraries are shareable across libraries and applications. They can be imported 
 
 Run `ng serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding\asdfasfd
+## Code scaffolding
 
 Run `ng g component my-component --project=my-app` to generate a new component.
 
