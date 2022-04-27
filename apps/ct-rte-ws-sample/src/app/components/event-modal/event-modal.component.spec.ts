@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { EventModalComponent } from './event-modal.component';
 
@@ -9,6 +10,12 @@ describe('EventModalComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [EventModalComponent],
+      providers: [{
+        provide: NgbActiveModal,
+        useValue: {
+          close: jest.fn(),
+        }
+      }]
     }).compileComponents();
   });
 
