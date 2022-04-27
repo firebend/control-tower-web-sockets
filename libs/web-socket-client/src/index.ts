@@ -10,9 +10,14 @@ export * from './lib/models/HubActionTypes';
 export * from './lib/models/ModelStateResult';
 export * from './lib/models/RealTimeEvent';
 export * from './lib/models/Result';
+export * from './lib/models/SubscriptionViewModelCreate';
+export * from './lib/models/SubscriptionViewModelRead';
 
 //services
 export * from './lib/services/HubConnectionRealTimeConnection';
 export * from './lib/services/RealTimeEventBuilder';
 export * from './lib/services/RealTimeEventTriggerBuilder';
 export * from './lib/services/RealTimeEventsConnectionBuilder';
+
+//errors
+export * from './lib/errors/EventSubscriptionError';
