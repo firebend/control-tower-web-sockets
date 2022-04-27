@@ -10,12 +10,14 @@ describe('EventModalComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [EventModalComponent],
-      providers: [{
-        provide: NgbActiveModal,
-        useValue: {
-          close: jest.fn(),
-        }
-      }]
+      providers: [
+        {
+          provide: NgbActiveModal,
+          useValue: {
+            close: jest.fn(),
+          },
+        },
+      ],
     }).compileComponents();
   });
 
