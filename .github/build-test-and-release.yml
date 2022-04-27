@@ -24,7 +24,7 @@ jobs:
     - name: Deploy
       if: env.flag
       env:
-        NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        NPM_AUTH_TOKEN: ${{ secrets.FIREBEND_NPM_KEY }}
       run: |
         npm config set //registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN
         ./.github/scripts/pub.sh
