@@ -11,13 +11,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        fetch-depth: 0
+        fetch-depth: 3
 
+    - uses: nrwl/nx-set-shas@v2
     - run: npm ci
+    - run: npm install
     - run: npx nx workspace-lint
     - run: npx nx format:check
-    - run: npx nx affected --target=lint --parallel=3 --base=main~1
-    - run: npx nx affected --target=test --parallel=3 --ci --code-coverage --base=main~1
+    - run: npx nx affected --target=lint --parallel=3
+    - run: npx nx affected --target=test --parallel=3 --ci --code-coverage
 
     - name: Deploy
       env:
