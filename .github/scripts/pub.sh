@@ -27,11 +27,11 @@ if [ "$AFFECTED" != "" ]; then
   while IFS= read -r -d $' ' lib; do
     echo "Setting version for $lib"
     cd "$PARENT_DIR"
-    cd "$ROOT_DIR/libs/${lib/-//}"
+    cd "$ROOT_DIR/libs/${lib}"
     npm version "$RELEASE_TYPE" -f -m "Control Tower Web Sockets $RELEASE_TYPE"
     echo "Building $lib"
     cd "$PARENT_DIR"
-    npm run build "$lib" -- --prod --with-deps
+    npm run build "$lib" -- --production --with-deps
     wait
   done <<<"$AFFECTED "
 
@@ -39,7 +39,7 @@ if [ "$AFFECTED" != "" ]; then
   while IFS= read -r -d $' ' lib; do
     if [ "$DRY_RUN" == "False" ]; then
       echo "Publishing $lib"
-      npm publish "$ROOT_DIR/dist/libs/${lib/-//}" --access=public
+      npm publish "$ROOT_DIR/dist/libs/${lib}" --access=public
     else
       echo "Dry Run, not publishing $lib"
     fi

@@ -11,7 +11,13 @@
         "main": "libs/web-socket-client/src/index.ts",
         "tsConfig": "libs/web-socket-client/tsconfig.lib.json",
         "assets": ["libs/web-socket-client/*.md"]
-      }
+      },
+      "configurations": {
+        "production": {
+            "optimization": true,
+            "webpackConfig": "libs/xxx/webpack.config.js"
+        }
+    }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
