@@ -1,5 +1,5 @@
-//factory
-export * from './lib/web-socket-client';
+//errors
+export * from './lib/errors/EventSubscriptionError';
 
 //interfaces
 export * from './lib/interfaces/IRealTimeConnection';
@@ -19,5 +19,5 @@ export * from './lib/services/RealTimeEventBuilder';
 export * from './lib/services/RealTimeEventTriggerBuilder';
 export * from './lib/services/RealTimeEventsConnectionBuilder';
 
-//errors
-export * from './lib/errors/EventSubscriptionError';
+//factory
+export * from './lib/web-socket-client';
