@@ -1,9 +1,13 @@
 name: Merge on Main
 on:
+  # pull_request:
+  #   branches:
+  #     - main
+  #   types: [closed]
+  push:
+      branches:
+        - '!main'
   pull_request:
-    branches:
-      - main
-    types: [closed]
 
 jobs:
   release:
@@ -14,6 +18,12 @@ jobs:
       with:
         fetch-depth: 3
 
+    - name: 'Configure NPM'
+      run: echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > .npmrc
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.FIREBEND_NPM_KEY}}
+
+    - run: npm whoami
     - run: echo "NX_HEAD=`git rev-parse HEAD`" >> $GITHUB_ENV
     - run: echo "NX_BASE=`git rev-parse HEAD~1`" >> $GITHUB_ENV
     - run: echo $NX_HEAD
@@ -23,13 +33,7 @@ jobs:
     - run: npx nx format:check --verbose
     - run: npx nx affected --target=lint
     - run: npx nx affected --target=test --ci --code-coverage
-
-    - name: Deploy
-      env:
-        NPM_AUTH_TOKEN: ${{ secrets.FIREBEND_NPM_KEY }}
-      run: |
-        npm config set //registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN
-        ./.github/scripts/pub.sh
+    - run: ./.github/scripts/pub.sh
 
     # - name: Build Docs
     #   if: env.flag
@@ -40,7 +44,7 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .
-        git commit -m "Release [skip-ci]" -a || true
+        git commit --no-verify -m "Release [skip-ci]" -a || true
 
     - name: Push changes
       uses: ad-m/github-push-action@master
