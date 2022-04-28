@@ -14,9 +14,9 @@
       },
       "configurations": {
         "production": {
-            "optimization": true
+          "optimization": true
         }
-    }
+      }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
