@@ -14,8 +14,7 @@
       },
       "configurations": {
         "production": {
-            "optimization": true,
-            "webpackConfig": "libs/xxx/webpack.config.js"
+            "optimization": true
         }
     }
     },
