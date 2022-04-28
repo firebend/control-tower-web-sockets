@@ -9,6 +9,8 @@
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
+    "test:all": "nx run-many --target=test --all",
+    "test:all:no-cache": "npm run test:all --skip-nx-cache",
     "docs": "typedoc",
     "prepare": "husky install"
   },
