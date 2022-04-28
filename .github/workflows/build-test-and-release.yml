@@ -15,7 +15,6 @@ jobs:
 
     - uses: nrwl/nx-set-shas@v2
     - run: npm ci
-    - run: npm install
     - run: npx nx workspace-lint
     - run: npx nx format:check --verbose
     - run: npx nx affected --target=lint
