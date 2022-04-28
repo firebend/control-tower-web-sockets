@@ -12,6 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
+        persist-credentials: false
         fetch-depth: 3
 
     - name: 'Configure NPM'
@@ -45,10 +46,10 @@ jobs:
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
+        github_token: ${{secrets.GIT_TOKEN}}
+        branch: ${{ github.ref }}
         tags: true
         force: true
-        branch: ${{ github.ref }}
-        github_token: ${{secrets.GIT_TOKEN}}
   empty:
     runs-on: ubuntu-latest
     if: success()
