@@ -41,7 +41,7 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add -A
-        git commit -m "Release [skip-ci]"
+        git commit -m "Release [skip-ci]" --no-verify
 
     - name: Push changes
       uses: ad-m/github-push-action@master
