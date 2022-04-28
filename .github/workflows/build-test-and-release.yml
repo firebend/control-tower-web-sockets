@@ -13,8 +13,8 @@ jobs:
       with:
         fetch-depth: 3
 
-    - run: echo "git rev-parse HEAD" >> $NX_HEAD
-    - run: echo "git rev-parse HEAD~1" >> $NX_BASE
+    - run: NX_HEAD=`git rev-parse HEAD`
+    - run: NX_BASE=`git rev-parse HEAD~1`
     - run: echo $NX_HEAD
     - run: echo $NX_BASE
     - run: npm ci
