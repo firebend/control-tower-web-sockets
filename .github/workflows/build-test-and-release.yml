@@ -6,15 +6,16 @@ on:
     types: [closed]
 
 jobs:
-  build:
+  release:
+    name: Release
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 3
 
-    - run: NX_HEAD=`git rev-parse HEAD`
-    - run: NX_BASE=`git rev-parse HEAD~1`
+    - run: echo "NX_HEAD=`git rev-parse HEAD`" >> $GITHUB_ENV
+    - run: echo "NX_BASE=`git rev-parse HEAD~1`" >> $GITHUB_ENV
     - run: echo $NX_HEAD
     - run: echo $NX_BASE
     - run: npm ci
