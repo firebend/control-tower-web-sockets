@@ -13,7 +13,10 @@ jobs:
       with:
         fetch-depth: 3
 
-    - uses: nrwl/nx-set-shas@v2
+    - run: echo "git rev-parse HEAD" >> $NX_HEAD
+    - run: echo "git rev-parse HEAD~1" >> $NX_BASE
+    - run: echo $NX_HEAD
+    - run: echo $NX_BASE
     - run: npm ci
     - run: npx nx workspace-lint
     - run: npx nx format:check --verbose
