@@ -1,6 +1,11 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+if test -f "./yarn.lock"; then
+  echo "Yarn lock file detected. This project only supports using npm"
+  exit 1
+fi
+
 npx nx format:check
 
 npx nx affected --target=lint
