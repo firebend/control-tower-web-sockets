@@ -10,7 +10,7 @@
     "build": "nx build",
     "test": "nx test",
     "test:all": "nx run-many --target=test --all",
-    "test:all:no-cache": "npm run test:all --skip-nx-cache",
+    "test:all:no-cache": "nx run-many --target=test --all --skip-nx-cache",
     "docs": "typedoc",
     "prepare": "husky install"
   },
@@ -46,6 +46,7 @@
     "@angular/cli": "13.3.3",
     "@angular/compiler-cli": "13.3.4",
     "@angular/language-service": "13.3.4",
+    "@firebend/control-tower-web-socket-client": "file:libs/web-socket-client",
     "@nrwl/cli": "14.0.1",
     "@nrwl/eslint-plugin-nx": "14.0.1",
     "@nrwl/jest": "14.0.1",
