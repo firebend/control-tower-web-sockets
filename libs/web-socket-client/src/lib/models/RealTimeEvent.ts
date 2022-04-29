@@ -38,4 +38,9 @@ export interface RealTimeEvent<T> {
    * The event name
    */
   eventName: string;
+
+  /**
+   * The real time event type
+   */
+  eventType: string;
 }
