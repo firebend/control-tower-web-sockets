@@ -58,6 +58,7 @@ export class BaseEventsComponent implements OnInit, OnDestroy {
           eventName: 'loads',
           eventTime: new Date().toISOString(),
           fieldChanges: [],
+          eventType: 'faked',
         },
         this.realTimeEvents$
       );
