@@ -11,6 +11,8 @@
     "test": "nx test",
     "test:all": "nx run-many --target=test --all",
     "test:all:no-cache": "nx run-many --target=test --all --skip-nx-cache",
+    "test:affected": "nx affected --target=test",
+    "lint": "nx affected --target=lint",
     "docs": "typedoc",
     "prepare": "husky install"
   },
