@@ -6,8 +6,8 @@ if test -f "./yarn.lock"; then
   exit 1
 fi
 
-npx nx format:check
-echo 'nx format:check passed'
+npx nx format:write
+echo 'nx format:write passed'
 
 npx nx affected --target=lint
 echo 'nx affected --target=lint passed'
