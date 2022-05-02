@@ -6,9 +6,7 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/ct-rte-ws-sample",
         "index": "apps/ct-rte-ws-sample/src/index.html",
@@ -22,13 +20,9 @@
         ],
         "styles": [
           "apps/ct-rte-ws-sample/src/styles.scss",
-          "node_modules/highlight.js/styles/monokai-sublime.css",
-          "node_modules/bootstrap/dist/css/bootstrap.min.css"
+          "node_modules/highlight.js/styles/monokai-sublime.css"
         ],
-        "scripts": [],
-        "webWorkerTsConfig": "apps/ct-rte-ws-sample/tsconfig.worker.json",
-        "serviceWorker": true,
-        "ngswConfigPath": "apps/ct-rte-ws-sample/ngsw-config.json"
+        "scripts": []
       },
       "configurations": {
         "production": {
@@ -92,13 +86,10 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/apps/ct-rte-ws-sample"
-      ],
+      "outputs": ["coverage/apps/ct-rte-ws-sample"],
       "options": {
         "jestConfig": "apps/ct-rte-ws-sample/jest.config.js",
-        "passWithNoTests": true,
-        "webWorkerTsConfig": "apps/ct-rte-ws-sample/tsconfig.worker.json"
+        "passWithNoTests": true
       }
     }
   },
