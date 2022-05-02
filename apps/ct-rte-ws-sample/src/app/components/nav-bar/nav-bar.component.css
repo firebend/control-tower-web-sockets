@@ -1,6 +1,7 @@
 .nav-container {
   background-color: #09013c;
   color: white;
+  min-height: 75px;
 }
 
 .nav-link {
@@ -11,5 +12,5 @@
   width: 125px;
   margin-top: 15px;
   margin-left: 15px;
-  display: inline block;
+  position: absolute;
 }
