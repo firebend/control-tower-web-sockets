@@ -4,6 +4,7 @@ import { RealTimeEvent } from '@ct-rte-ws/web-socket-client';
 import { filter, map } from 'rxjs';
 import { IJwtMessage } from '../models/messages/jwt-message';
 import { ToastModel } from '../models/toast-model';
+import { EventsWorkerFactoryService } from './events-worker-factory.service';
 import { ToastService } from './toast.service';
 
 @Injectable({
@@ -12,10 +13,16 @@ import { ToastService } from './toast.service';
 export class WebWorkerService {
   private readonly _authService: AuthService;
   private readonly _toastService: ToastService;
+  private readonly _workerFactory: EventsWorkerFactoryService;
 
-  constructor(authService: AuthService, toastService: ToastService) {
+  constructor(
+    authService: AuthService,
+    toastService: ToastService,
+    workerFactory: EventsWorkerFactoryService
+  ) {
     this._authService = authService;
     this._toastService = toastService;
+    this._workerFactory = workerFactory;
   }
 
   start() {
@@ -32,18 +39,16 @@ export class WebWorkerService {
   }
 
   /**
-   * Creates the worker and waits for the auth0 token to be available.
+   * Waits for the auth0 token to be available and then creates the worker.
    */
   private _startWorker() {
-    const worker = new Worker(new URL('../events.worker.ts', import.meta.url));
-
     this._authService.idTokenClaims$
       .pipe(
         map((x) => ({ token: x?.__raw ?? '' })),
         filter((x) => !!x.token)
       )
       .subscribe((x) => {
-        this._addRealTimeEventListener(worker, x.token);
+        this._addRealTimeEventListener(x.token);
       });
   }
 
@@ -52,7 +57,9 @@ export class WebWorkerService {
    * @param worker The worker to add the listener to.
    * @param token The auth0 token to use for the event listener.
    */
-  private _addRealTimeEventListener(worker: Worker, token: string) {
+  private _addRealTimeEventListener(token: string) {
+    const worker = this._workerFactory.createWorker();
+
     worker.postMessage({
       token: token,
     } as IJwtMessage);

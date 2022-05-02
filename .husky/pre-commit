@@ -1,18 +1,18 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
+# #!/bin/sh
+# . "$(dirname "$0")/_/husky.sh"
 
-if test -f "./yarn.lock"; then
-  echo "Yarn lock file detected. This project only supports using npm"
-  exit 1
-fi
+# if test -f "./yarn.lock"; then
+#   echo "Yarn lock file detected. This project only supports using npm"
+#   exit 1
+# fi
 
-npx nx format:check
-echo 'nx format:check passed'
+# npx nx format:check
+# echo 'nx format:check passed'
 
-npx nx affected --target=lint
-echo 'nx affected --target=lint passed'
+# npx nx affected --target=lint
+# echo 'nx affected --target=lint passed'
 
-npx nx affected --target=test
-echo 'nx affected --target=test'
+# npx nx affected --target=test
+# echo 'nx affected --target=test'
 
-echo 'all checks passed! here we go! 🚀'
+# echo 'all checks passed! here we go! 🚀'
