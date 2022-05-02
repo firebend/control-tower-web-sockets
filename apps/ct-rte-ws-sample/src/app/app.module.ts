@@ -23,6 +23,7 @@ import { BaseEventsComponent } from './pages/events/base.events.component';
 import { EventsCreateComponent } from './pages/events/events.create.component';
 import { EventsModifiedComponent } from './pages/events/events.modified.component';
 import { EventsModifiedFilterComponent } from './pages/events/events.modified.filter.component';
+import { ToastsComponent } from './components/toasts/toasts.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { EventsModifiedFilterComponent } from './pages/events/events.modified.fi
     EventModalComponent,
     EventsModifiedComponent,
     EventsModifiedFilterComponent,
+    ToastsComponent,
   ],
   imports: [
     BrowserModule,

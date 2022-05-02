@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { WebWorkerService } from './services/web-worker.service';
 
 @Component({
   selector: 'ct-rte-ws-root',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'ct-rte-ws-sample';
+
+  constructor(workerService: WebWorkerService) {
+    workerService.start();
+  }
 }

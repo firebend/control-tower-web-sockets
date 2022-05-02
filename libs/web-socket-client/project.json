@@ -5,12 +5,16 @@
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/libs/web-socket-client",
         "main": "libs/web-socket-client/src/index.ts",
         "tsConfig": "libs/web-socket-client/tsconfig.lib.json",
-        "assets": ["libs/web-socket-client/*.md"]
+        "assets": [
+          "libs/web-socket-client/*.md"
+        ]
       },
       "configurations": {
         "production": {
@@ -20,14 +24,20 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["libs/web-socket-client/**/*.ts"]
+        "lintFilePatterns": [
+          "libs/web-socket-client/**/*.ts"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/web-socket-client"],
+      "outputs": [
+        "coverage/libs/web-socket-client"
+      ],
       "options": {
         "jestConfig": "libs/web-socket-client/jest.config.js",
         "passWithNoTests": true

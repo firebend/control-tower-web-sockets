@@ -10,14 +10,22 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "stripInternal": true,
     "paths": {
-      "@ct-rte-ws/web-socket-client": ["libs/web-socket-client/src/index.ts"]
+      "@ct-rte-ws/web-socket-client": [
+        "libs/web-socket-client/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

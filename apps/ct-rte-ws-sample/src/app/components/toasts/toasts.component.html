@@ -1,0 +1,13 @@
+<ngb-toast *ngFor="let toast of toastService.toasts"
+  [header]="toast.header"
+  [class]="toast.className"
+  [autohide]="toast.autoHide"
+  [delay]="toast.delay || 5000"
+  (hide)="toastService.remove(toast)">
+  <ng-template [ngIf]="toast.isTemplateReference"
+    [ngIfElse]="text">
+    <ng-template [ngTemplateOutlet]="toast.messageAsTemplateReference"></ng-template>
+  </ng-template>
+
+  <ng-template #text>{{ toast.message }}</ng-template>
+</ngb-toast>
