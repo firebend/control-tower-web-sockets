@@ -89,7 +89,8 @@
       "outputs": ["coverage/apps/ct-rte-ws-sample"],
       "options": {
         "jestConfig": "apps/ct-rte-ws-sample/jest.config.js",
-        "passWithNoTests": true
+        "passWithNoTests": true,
+        "webWorkerTsConfig": "apps/ct-rte-ws-sample/tsconfig.worker.json"
       }
     }
   },

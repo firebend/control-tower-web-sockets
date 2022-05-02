@@ -7,7 +7,6 @@ import { WebWorkerService } from './services/web-worker.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-
   constructor(workerService: WebWorkerService) {
     workerService.start();
   }

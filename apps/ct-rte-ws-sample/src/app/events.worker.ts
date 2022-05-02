@@ -26,6 +26,6 @@ addEventListener('message', async (event) => {
       postMessage(realTimeEvent);
     });
 
-    console.log('Web Worker is configured to listen to real time events!')
+    console.log('Web Worker is configured to listen to real time events!');
   }
 });

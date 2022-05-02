@@ -7,13 +7,13 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide : WebWorkerService,
+          provide: WebWorkerService,
           useValue: {
             // eslint-disable-next-line @typescript-eslint/no-empty-function
-            start: () => {}
-          }
+            start: () => {},
+          },
         },
-      ]
+      ],
     });
   });
 
@@ -22,5 +22,4 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
-
 });

@@ -6,6 +6,6 @@ jest.mock('./app/services/events-worker-factory.service.ts', () => {
       createWorker(): Worker {
         return new Worker(new URL('../events.worker.ts', ''));
       }
-    }
+    },
   };
-})
+});
