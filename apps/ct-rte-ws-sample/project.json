@@ -22,7 +22,8 @@
           "apps/ct-rte-ws-sample/src/styles.scss",
           "node_modules/highlight.js/styles/monokai-sublime.css"
         ],
-        "scripts": []
+        "scripts": [],
+        "webWorkerTsConfig": "apps/ct-rte-ws-sample/tsconfig.worker.json"
       },
       "configurations": {
         "production": {
