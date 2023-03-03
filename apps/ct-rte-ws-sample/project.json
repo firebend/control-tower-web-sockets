@@ -1,6 +1,7 @@
 {
+  "name": "ct-rte-ws-sample",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "root": "apps/ct-rte-ws-sample",
   "sourceRoot": "apps/ct-rte-ws-sample/src",
   "prefix": "ct-rte-ws",
   "targets": {
