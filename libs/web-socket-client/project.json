@@ -1,5 +1,6 @@
 {
-  "root": "libs/web-socket-client",
+  "name": "web-socket-client",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/web-socket-client/src",
   "projectType": "library",
   "targets": {
