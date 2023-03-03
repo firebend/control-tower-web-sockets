@@ -30,7 +30,7 @@ addEventListener('message', async (event) => {
 
       if (jwtMessage.token) {
         const eventBuilder = await realTimeEventFactory(
-          'http://localhost:5216/events'
+          'http://localhost:5216/real-time/events'
         )
           .withAccessToken(jwtMessage.token)
           .startAsync();
