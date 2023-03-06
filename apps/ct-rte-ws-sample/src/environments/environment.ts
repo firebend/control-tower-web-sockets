@@ -1,6 +1,7 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
+import { AuthConfig } from '@auth0/auth0-angular';
 import config from './auth-config';
 
 const { domain, clientId, audience, errorPath } = config as {
@@ -15,10 +16,12 @@ export const environment = {
   auth: {
     domain,
     clientId,
-    audience,
-    redirectUri: window.location.origin,
-    errorPath
-  },
+    authorizationParams: {
+      redirect_uri: window.location.origin,
+      audience,
+    },
+    errorPath,
+  } as AuthConfig,
   httpInterceptor: {
     allowedList: [`*`],
   },

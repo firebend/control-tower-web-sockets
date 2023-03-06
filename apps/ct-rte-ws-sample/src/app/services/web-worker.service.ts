@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { filter, map } from 'rxjs';
 import { IBaseMessage } from '../models/messages/base-message';
-import { ConnectedMessage } from '../models/messages/connected-message';
 import { JwtMessage } from '../models/messages/jwt-message';
 import { RealTimeEventMessage } from '../models/messages/real-time-event-message';
 import { ToastModel } from '../models/toast-model';
