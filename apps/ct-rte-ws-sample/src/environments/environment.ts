@@ -19,7 +19,6 @@ export const environment = {
     authorizationParams: {
       redirect_uri: window.location.origin,
       audience,
-
     },
     errorPath,
   } as AuthConfig,
