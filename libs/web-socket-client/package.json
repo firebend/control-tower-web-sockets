@@ -9,7 +9,7 @@
   "repository": "github:firebend/control-tower-web-sockets",
   "license": "MIT",
   "dependencies": {
-    "@microsoft/signalr": "7.0.3"
+    "@microsoft/signalr": "7.0.5"
   },
   "keywords": [
     "firebend",
