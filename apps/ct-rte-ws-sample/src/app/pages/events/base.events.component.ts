@@ -73,7 +73,7 @@ export class BaseEventsComponent implements OnInit, OnDestroy {
     const token = await this.getTokenAsync();
 
     const eventBuilder = await realTimeEventFactory(
-      'http://localhost:5216/real-time/events'
+      'https://platform-qa.controltower.tech/events/signalr'
     )
       .withAccessToken(token.token)
       .startAsync();

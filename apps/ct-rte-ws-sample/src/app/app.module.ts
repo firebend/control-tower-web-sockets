@@ -79,6 +79,5 @@ import { ToastsComponent } from './components/toasts/toasts.component';
     },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [EventModalComponent],
 })
 export class AppModule {}

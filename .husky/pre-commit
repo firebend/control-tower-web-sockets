@@ -8,11 +8,3 @@ fi
 
 npx nx format:write
 echo 'nx format:write passed'
-
-npx nx affected --target=lint
-echo 'nx affected --target=lint passed'
-
-npx nx affected --target=test
-echo 'nx affected --target=test'
-
-echo 'all checks passed! here we go! 🚀'
