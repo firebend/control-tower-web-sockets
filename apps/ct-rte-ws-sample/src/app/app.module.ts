@@ -78,6 +78,6 @@ import { ToastsComponent } from './components/toasts/toasts.component';
       },
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
