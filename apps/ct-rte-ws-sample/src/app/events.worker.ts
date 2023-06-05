@@ -30,7 +30,7 @@ addEventListener('message', async (event) => {
 
       if (jwtMessage.token) {
         const eventBuilder = await realTimeEventFactory(
-          'http://localhost:5216/real-time/events'
+          'http://platform-qa.controltower.tech/events/signalr'
         )
           .withAccessToken(jwtMessage.token)
           .startAsync();
