@@ -6,7 +6,7 @@
     "ng": "nx",
     "preinstall": "npx only-allow npm",
     "postinstall": "node ./decorate-angular-cli.js",
-    "start": "nx serve",
+    "start": "nx run ct-rte-ws-sample:serve:development",
     "build": "nx build",
     "test": "nx test",
     "test:all": "nx run-many --target=test --all",
