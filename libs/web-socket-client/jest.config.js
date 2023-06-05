@@ -1,5 +1,5 @@
 /* eslint-disable */
-export default {
+module.exports = {
   displayName: 'web-socket-client',
   preset: '../../jest.preset.js',
   transform: {
