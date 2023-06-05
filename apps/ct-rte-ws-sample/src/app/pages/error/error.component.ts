@@ -10,7 +10,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class ErrorComponent implements OnInit {
 
-  public error$: Observable<any> = this.auth.error$;
+  public error$: Observable<Error> = this.auth.error$;
 
   constructor(private auth: AuthService, private router: Router) {}
 

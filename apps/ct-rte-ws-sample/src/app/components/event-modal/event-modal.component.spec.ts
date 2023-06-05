@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Highlight, HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { Highlight, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 
 import { EventModalComponent } from './event-modal.component';
 
