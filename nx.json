@@ -4,15 +4,7 @@
     "defaultBase": "main"
   },
   "cli": {
-    "defaultCollection": "@nx/angular",
     "packageManager": "npm"
-  },
-  "implicitDependencies": {
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
-    },
-    ".eslintrc.json": "*"
   },
   "tasksRunnerOptions": {
     "default": {
@@ -22,14 +14,6 @@
         "accessToken": "MmQ4YWM1ZTQtMmRjNi00Yjg2LWI5MTMtZWFmYTBjODQ0ZGQ5fHJlYWQtd3JpdGU="
       }
     }
-  },
-  "targetDependencies": {
-    "build": [
-      {
-        "target": "build",
-        "projects": "dependencies"
-      }
-    ]
   },
   "generators": {
     "@nx/angular:application": {
@@ -45,5 +29,17 @@
       "style": "scss"
     }
   },
-  "defaultProject": "ct-rte-ws-sample"
+  "defaultProject": "ct-rte-ws-sample",
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    }
+  },
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "sharedGlobals": [],
+    "production": ["default"]
+  }
 }
