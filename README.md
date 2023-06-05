@@ -1,5 +1,3 @@
-
-
 # Control Tower Platform Real Time Web Sockets
 
 This project was generated using [Nx](https://nx.dev).
@@ -9,6 +7,7 @@ This project was generated using [Nx](https://nx.dev).
 🔎 **Smart, Fast and Extensible Build System**
 
 # Project Layout
+
 This project scaffolds a library for connecting to the Control Tower Platform Real Time Web Sockets module. An Angular app is included to show a real working example of how the system works. You can also visit the library read me [here](./libs/web-socket-client/README.md) to learn more about how it works. Nx documentation is listed below.
 
 ## Quick Start & Documentation
@@ -28,7 +27,7 @@ These capabilities include generating applications, libraries, etc as well as th
 Below are our core plugins:
 
 - [Angular](https://angular.io)
-  - `ng add @nrwl/angular`
+  - `ng add @nx/angular`
 - [React](https://reactjs.org)
   - `ng add @nrwl/react`
 - Web (no framework frontends)
@@ -44,7 +43,7 @@ There are also many [community plugins](https://nx.dev/community) you could add.
 
 ## Generate an application
 
-Run `ng g @nrwl/angular:app my-app` to generate an application.
+Run `ng g @nx/angular:app my-app` to generate an application.
 
 > You can use any of the plugins above to generate applications as well.
 
@@ -52,7 +51,7 @@ When using Nx, you can create multiple applications and libraries in the same wo
 
 ## Generate a library
 
-Run `ng g @nrwl/angular:lib my-lib` to generate a library.
+Run `ng g @nx/angular:lib my-lib` to generate a library.
 
 > You can also use any of the plugins above to generate libraries as well.
 

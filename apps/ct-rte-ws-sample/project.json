@@ -78,7 +78,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
         "lintFilePatterns": [
           "apps/ct-rte-ws-sample/src/**/*.ts",
@@ -87,7 +87,7 @@
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["coverage/apps/ct-rte-ws-sample"],
       "options": {
         "jestConfig": "apps/ct-rte-ws-sample/jest.config.js",
