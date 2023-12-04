@@ -30,7 +30,7 @@
     "@auth0/auth0-angular": "2.1.0",
     "@fortawesome/angular-fontawesome": "0.13.0",
     "@fortawesome/fontawesome-svg-core": "6.4.2",
-    "@fortawesome/free-solid-svg-icons": "6.4.0",
+    "@fortawesome/free-solid-svg-icons": "6.5.1",
     "@ng-bootstrap/ng-bootstrap": "15.0.1",
     "@nx/angular": "16.8.1",
     "@popperjs/core": "2.11.8",
