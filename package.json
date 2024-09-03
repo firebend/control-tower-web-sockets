@@ -67,7 +67,7 @@
     "jest-environment-jsdom": "29.5.0",
     "jest-preset-angular": "13.1.1",
     "nx": "16.8.1",
-    "nx-cloud": "16.0.5",
+    "nx-cloud": "19.0.0",
     "prettier": "2.8.5",
     "ts-jest": "29.1.0",
     "ts-node": "10.9.1",
