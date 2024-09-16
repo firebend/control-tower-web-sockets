@@ -51,7 +51,7 @@
     "@angular/compiler-cli": "16.0.4",
     "@angular/language-service": "18.2.3",
     "@firebend/control-tower-web-socket-client": "file:libs/web-socket-client",
-    "@nx/eslint-plugin": "16.4.3",
+    "@nx/eslint-plugin": "19.7.3",
     "@nx/jest": "16.8.1",
     "@nx/js": "17.2.7",
     "@nx/linter": "19.6.5",
