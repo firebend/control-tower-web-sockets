@@ -39,7 +39,7 @@
     "ngx-highlightjs": "9.0.0",
     "ngx-moment": "6.0.2",
     "rxjs": "7.8.1",
-    "tslib": "2.5.3",
+    "tslib": "2.7.0",
     "zone.js": "0.13.0"
   },
   "devDependencies": {
