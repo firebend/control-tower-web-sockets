@@ -49,7 +49,7 @@
     "@angular-eslint/template-parser": "16.0.3",
     "@angular/cli": "16.2.3",
     "@angular/compiler-cli": "16.0.4",
-    "@angular/language-service": "16.1.1",
+    "@angular/language-service": "18.2.3",
     "@firebend/control-tower-web-socket-client": "file:libs/web-socket-client",
     "@nx/eslint-plugin": "16.4.3",
     "@nx/jest": "16.8.1",
