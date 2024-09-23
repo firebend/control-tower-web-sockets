@@ -18,7 +18,6 @@ jobs:
 
       - uses: nrwl/nx-set-shas@v3
       - run: npm ci
-      - run: npx nx workspace-lint
       - run: npx nx format:check --verbose
       - run: npx nx affected --target=lint
       - run: npx nx affected --target=test --ci --code-coverage
