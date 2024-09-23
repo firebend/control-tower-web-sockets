@@ -25,7 +25,7 @@ echo "Release Type: $RELEASE_TYPE"
 DRY_RUN=${DRY_RUN:-"False"}
 echo "Dry Run: $DRY_RUN"
 
-AFFECTED=$(node node_modules/.bin/nx affected:libs --plain)
+AFFECTED=$(node node_modules/.bin/nx show projects --affected --type=lib)
 echo "Affected Libraries: $AFFECTED"
 
 if [ "$AFFECTED" != "" ]; then

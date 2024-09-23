@@ -1,8 +1,6 @@
 {
   "npmScope": "ct-rte-ws",
-  "affected": {
-    "defaultBase": "main"
-  },
+  "defaultBase": "main",
   "cli": {
     "packageManager": "npm"
   },
