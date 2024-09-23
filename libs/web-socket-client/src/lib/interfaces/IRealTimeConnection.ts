@@ -23,7 +23,7 @@ export interface IRealTimeConnection {
    * @param request a model containing the request data
    */
   registerForEventAsync(
-    request: ISubscriptionViewModelCreate
+    request: ISubscriptionViewModelCreate,
   ): Promise<IModelSateResult<ISubscriptionViewModelRead>>;
 
   /**
@@ -31,7 +31,7 @@ export interface IRealTimeConnection {
    * @param subscriptionId The id corresponding to a previously registered subscription
    */
   unregisterForEventAsync(
-    subscriptionId: string
+    subscriptionId: string,
   ): Promise<IResult<ISubscriptionViewModelRead>>;
 
   /**
@@ -41,7 +41,7 @@ export interface IRealTimeConnection {
    */
   addEventHandler<T>(
     eventName: string,
-    callback: (event: RealTimeEvent<T>) => void
+    callback: (event: RealTimeEvent<T>) => void,
   ): void;
 
   /**
