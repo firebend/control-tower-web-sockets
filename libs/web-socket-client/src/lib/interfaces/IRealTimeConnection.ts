@@ -35,7 +35,7 @@ export interface IRealTimeConnection {
   ): Promise<IResult<ISubscriptionViewModelRead>>;
 
   /**
-   * Adds an event handler for when a given event name is triggered
+   * Adds an event handler for when a given event name is triggered.
    * @param eventName The event name
    * @param callback The callback
    */
@@ -51,7 +51,7 @@ export interface IRealTimeConnection {
   removeEventHandler(eventName: string): void;
 
   /**
-   * Configures a callback for when a connection is lost and then reestablished
+   * Configures a callback for when a connection is lost and then reestablished.
    * @param callback The callback
    */
   onReconnected(callback: () => void): void;
