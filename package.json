@@ -36,7 +36,7 @@
     "@popperjs/core": "2.11.8",
     "bootstrap": "5.3.3",
     "moment": "2.29.4",
-    "ngx-highlightjs": "9.0.0",
+    "ngx-highlightjs": "10.0.0",
     "ngx-moment": "6.0.2",
     "rxjs": "7.8.1",
     "tslib": "2.7.0",
