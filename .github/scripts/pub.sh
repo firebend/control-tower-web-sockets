@@ -15,11 +15,19 @@ PARENT_DIR="$PWD"
 ROOT_DIR="."
 echo "Removing Dist"
 rm -rf "${ROOT_DIR:?}/dist"
+
 COMMIT_MESSAGE="$(git log -1 --pretty=format:"%s")"
+echo "Commit Message: $COMMIT_MESSAGE"
+
 RELEASE_TYPE=${1:-$(getBuildType "$COMMIT_MESSAGE")}
+echo "Release Type: $RELEASE_TYPE"
+
 DRY_RUN=${DRY_RUN:-"False"}
+echo "Dry Run: $DRY_RUN"
 
 AFFECTED=$(node node_modules/.bin/nx affected:libs --plain)
+echo "Affected Libraries: $AFFECTED"
+
 if [ "$AFFECTED" != "" ]; then
   cd "$PARENT_DIR"
   echo "Copy Environment Files"
