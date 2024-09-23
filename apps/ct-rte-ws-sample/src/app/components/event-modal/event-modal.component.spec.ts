@@ -10,7 +10,8 @@ describe('EventModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EventModalComponent, Highlight],
+      imports: [Highlight],
+      declarations: [EventModalComponent],
       providers: [
         {
           provide: NgbActiveModal,
