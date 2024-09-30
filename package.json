@@ -52,7 +52,7 @@
     "@angular/language-service": "18.2.5",
     "@firebend/control-tower-web-socket-client": "file:libs/web-socket-client",
     "@nx/eslint-plugin": "19.8.0",
-    "@nx/jest": "19.8.0",
+    "@nx/jest": "19.8.2",
     "@nx/js": "19.8.0",
     "@nx/linter": "19.8.0",
     "@nx/workspace": "19.8.0",
