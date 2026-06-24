@@ -6,6 +6,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   selector: 'ct-rte-ws-event-modal',
   templateUrl: './event-modal.component.html',
   styleUrls: ['./event-modal.component.scss'],
+  standalone: false,
 })
 export class EventModalComponent {
   @Input() public event: RealTimeEvent<unknown> | undefined;

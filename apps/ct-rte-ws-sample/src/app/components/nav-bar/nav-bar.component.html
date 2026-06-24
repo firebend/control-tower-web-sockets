@@ -1,5 +1,5 @@
 <div class="nav-container">
-  <nav class="navbar-expand-md">
+  <nav class="navbar navbar-expand-md">
     <img src="/assets/ct-logo-white.png" alt="Control Tower" class="ct-logo" />
     <div class="container">
       <button
@@ -24,144 +24,161 @@
           <li class="nav-item">
             <a routerLink="/" class="nav-link">Home</a>
           </li>
+          @if (auth.isAuthenticated$ | async) {
+            <li class="nav-item">
+              <a routerLink="/events-all" class="nav-link">Events</a>
+            </li>
+          }
         </ul>
 
         <ul class="navbar-nav d-none d-md-block">
           <!-- Login button: show if NOT authenticated -->
-          <li
-            class="nav-item"
-            *ngIf="(auth.isAuthenticated$ | async) === false"
-          >
-            <button
-              id="qsLoginBtn"
-              class="btn btn-primary btn-margin"
-              (click)="loginWithRedirect()"
-            >
-              Log in
-            </button>
-          </li>
+          @if ((auth.isAuthenticated$ | async) === false) {
+            <li class="nav-item">
+              <button
+                id="qsLoginBtn"
+                class="btn btn-primary btn-margin"
+                (click)="loginWithRedirect()"
+              >
+                Log in
+              </button>
+            </li>
+          }
           <!-- / Login button -->
 
           <!-- Fullsize dropdown: show if authenticated -->
-          <li
-            class="nav-item dropdown"
-            *ngIf="auth.user$ | async as user"
-            ngbDropdown
-          >
-            <a
-              ngbDropdownToggle
-              class="nav-link dropdown-toggle"
-              id="profileDropDown"
-              data-toggle="dropdown"
-            >
-              <!-- Profile image should be set to the profile picture from the id token -->
-              <img
-                [src]="user.picture"
-                alt="Profile picture"
-                class="nav-user-profile rounded-circle"
-                style="width: 75px"
-              />
-            </a>
-            <div class="dropdown-menu dropdown-menu-left" ngbDropdownMenu>
-              <!-- Show the user's full name from the id token here -->
-              <div class="dropdown-header">
-                {{ user.name }}
+          @if (auth.user$ | async; as user) {
+            <li class="nav-item dropdown" ngbDropdown>
+              <a
+                ngbDropdownToggle
+                class="nav-link dropdown-toggle"
+                id="profileDropDown"
+                data-toggle="dropdown"
+              >
+                <!-- Profile image should be set to the profile picture from the id token -->
+                <img
+                  [src]="user.picture"
+                  alt="Profile picture"
+                  class="nav-user-profile rounded-circle"
+                  style="width: 36px; height: 36px; object-fit: cover"
+                />
+              </a>
+              <div class="dropdown-menu dropdown-menu-left" ngbDropdownMenu>
+                <!-- Show the user's full name from the id token here -->
+                <div class="dropdown-header">
+                  {{ user.name }}
+                </div>
+                <a routerLink="/profile" class="dropdown-item dropdown-profile">
+                  <fa-icon [icon]="faUser" class="mr-3"></fa-icon>
+                  Profile
+                </a>
+                <a
+                  routerLink="/events-all"
+                  class="dropdown-item dropdown-profile"
+                >
+                  <fa-icon [icon]="faBoltLightning" class="mr-3"></fa-icon>
+                  Events All
+                </a>
+                <a
+                  routerLink="/events-create"
+                  class="dropdown-item dropdown-profile"
+                >
+                  <fa-icon [icon]="faPlusCircle" class="mr-3"></fa-icon>
+                  Events Create
+                </a>
+                <a
+                  routerLink="/events-modified"
+                  class="dropdown-item dropdown-profile"
+                >
+                  <fa-icon [icon]="faArrowsToCircle" class="mr-3"></fa-icon>
+                  Events Modified
+                </a>
+                <a
+                  routerLink="/events-modified-filter"
+                  class="dropdown-item dropdown-profile"
+                >
+                  <fa-icon [icon]="faFilter" class="mr-3"></fa-icon>
+                  Events Modified Filter
+                </a>
+                <button
+                  (click)="logout()"
+                  class="btn btn-link dropdown-item"
+                  id="qsLogoutBtn"
+                >
+                  <fa-icon [icon]="faPowerOff" class="mr-3"></fa-icon>
+                  Log out
+                </button>
               </div>
-              <a routerLink="/profile" class="dropdown-item dropdown-profile">
-                <fa-icon [icon]="faUser" class="mr-3"></fa-icon>
-                Profile
-              </a>
-              <a
-                routerLink="/events-all"
-                class="dropdown-item dropdown-profile"
-              >
-                <fa-icon [icon]="faBoltLightning" class="mr-3"></fa-icon>
-                Events All
-              </a>
-              <a
-                routerLink="/events-create"
-                class="dropdown-item dropdown-profile"
-              >
-                <fa-icon [icon]="faPlusCircle" class="mr-3"></fa-icon>
-                Events Create
-              </a>
-              <a
-                routerLink="/events-modified"
-                class="dropdown-item dropdown-profile"
-              >
-                <fa-icon [icon]="faArrowsToCircle" class="mr-3"></fa-icon>
-                Events Modified
-              </a>
-              <a
-                routerLink="/events-modified-filter"
-                class="dropdown-item dropdown-profile"
-              >
-                <fa-icon [icon]="faFilter" class="mr-3"></fa-icon>
-                Events Modified Filter
-              </a>
-              <button
-                (click)="logout()"
-                class="btn btn-link dropdown-item"
-                id="qsLogoutBtn"
-              >
-                <fa-icon [icon]="faPowerOff" class="mr-3"></fa-icon>
-                Log out
-              </button>
-            </div>
-          </li>
+            </li>
+          }
           <!-- /Fullsize dropdown -->
         </ul>
 
         <!-- Responsive login button: show if NOT authenticated -->
-        <ul
-          class="navbar-nav d-md-none"
-          *ngIf="(auth.isAuthenticated$ | async) === false"
-        >
-          <button
-            class="btn btn-primary btn-block"
-            id="qsLoginBtn"
-            (click)="loginWithRedirect()"
-          >
-            Log in
-          </button>
-        </ul>
+        @if ((auth.isAuthenticated$ | async) === false) {
+          <ul class="navbar-nav d-md-none">
+            <button
+              class="btn btn-primary btn-block"
+              id="qsLoginBtn"
+              (click)="loginWithRedirect()"
+            >
+              Log in
+            </button>
+          </ul>
+        }
         <!-- /Responsive login button -->
 
         <!-- Responsive profile dropdown: show if authenticated -->
-        <ul
-          class="navbar-nav d-md-none justify-content-between"
-          *ngIf="auth.user$ | async as user"
-          style="min-height: 170px"
-        >
-          <li class="nav-item">
-            <span class="user-info">
-              <!-- Profile image should be set to the profile picture from the id token -->
-              <img
-                alt="Profile picture"
-                class="nav-user-profile d-inline-block rounded-circle mr-3"
-                style="width: 75px"
-                [src]="user.picture"
-              />
-              <!-- Show the user's full name from the id token here -->
-              <h6 class="d-inline-block">{{ user.name }}</h6>
-            </span>
-          </li>
-          <li>
-            <fa-icon [icon]="faUser" class="mr-3"></fa-icon>
-            <a routerLink="/profile">Profile</a>
-          </li>
-
-          <li>
-            <fa-icon [icon]="faPowerOff" class="mr-3"></fa-icon>
-            <button
-              class="btn btn-link p-0"
-              id="qsLogoutBtn"
-              (click)="logout()"
-            >
-              Log out
-            </button>
-          </li>
-        </ul>
+        @if (auth.user$ | async; as user) {
+          <ul
+            class="navbar-nav d-md-none justify-content-between"
+            style="min-height: 250px"
+          >
+            <li class="nav-item">
+              <span class="user-info">
+                <!-- Profile image should be set to the profile picture from the id token -->
+                <img
+                  alt="Profile picture"
+                  class="nav-user-profile d-inline-block rounded-circle mr-3"
+                  style="width: 75px"
+                  [src]="user.picture"
+                />
+                <!-- Show the user's full name from the id token here -->
+                <h6 class="d-inline-block">{{ user.name }}</h6>
+              </span>
+            </li>
+            <li>
+              <fa-icon [icon]="faUser" class="mr-3"></fa-icon>
+              <a routerLink="/profile">Profile</a>
+            </li>
+            <li>
+              <fa-icon [icon]="faBoltLightning" class="mr-3"></fa-icon>
+              <a routerLink="/events-all">All Events</a>
+            </li>
+            <li>
+              <fa-icon [icon]="faPlusCircle" class="mr-3"></fa-icon>
+              <a routerLink="/events-create">Created Events</a>
+            </li>
+            <li>
+              <fa-icon [icon]="faArrowsToCircle" class="mr-3"></fa-icon>
+              <a routerLink="/events-modified">Modified Events</a>
+            </li>
+            <li>
+              <fa-icon [icon]="faFilter" class="mr-3"></fa-icon>
+              <a routerLink="/events-modified-filter">Filtered Events</a>
+            </li>
+            <li>
+              <fa-icon [icon]="faPowerOff" class="mr-3"></fa-icon>
+              <button
+                class="btn btn-link p-0"
+                id="qsLogoutBtn"
+                (click)="logout()"
+              >
+                Log out
+              </button>
+            </li>
+          </ul>
+        }
       </div>
     </div>
   </nav>

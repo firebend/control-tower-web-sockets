@@ -55,4 +55,10 @@ export interface IRealTimeConnection {
    * @param callback The callback
    */
   onReconnected(callback: () => void): void;
+
+  /**
+   * Configures a callback for when the connection is permanently closed.
+   * @param callback The callback
+   */
+  onClose(callback: (error?: Error) => void): void;
 }

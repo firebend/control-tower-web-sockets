@@ -9,10 +9,10 @@ export class ToastModel {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(options: ToastModel) {
-    this.autoHide = options.autoHide;
+    this.autoHide = options.autoHide ?? true;
     this.message = options.message || '';
     this.className = options.className || '';
-    this.delay = options.autoHide ? options.delay || 5000 : undefined;
+    this.delay = this.autoHide ? options.delay || 5000 : undefined;
     this.header = options.header || 'Alert!';
   }
 

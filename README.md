@@ -1,96 +1,252 @@
-# Control Tower Platform Real Time Web Sockets
+# Control Tower Real-Time Events Web Sockets
 
-This project was generated using [Nx](https://nx.dev).
+This repository contains the official `@firebend/control-tower-web-socket-client` npm package, an Angular sample application, and tooling for receiving real-time events from the [Control Tower Platform](https://github.com/firebend) over SignalR web sockets.
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+The package is published as `@firebend/control-tower-web-socket-client` and provides a fluent builder API around `@microsoft/signalr` for connecting, authenticating, and subscribing to real-time entity events.
 
-🔎 **Smart, Fast and Extensible Build System**
+## Table of Contents
 
-# Project Layout
+- [What is this repo?](#what-is-this-repo)
+- [Repository layout](#repository-layout)
+- [Prerequisites](#prerequisites)
+- [Getting started](#getting-started)
+- [Using the web-socket-client library](#using-the-web-socket-client-library)
+- [Developing on the library](#developing-on-the-library)
+- [Running the sample app](#running-the-sample-app)
+- [Common commands](#common-commands)
+- [Troubleshooting](#troubleshooting)
+- [Publishing](#publishing)
 
-This project scaffolds a library for connecting to the Control Tower Platform Real Time Web Sockets module. An Angular app is included to show a real working example of how the system works. You can also visit the library read me [here](./libs/web-socket-client/README.md) to learn more about how it works. Nx documentation is listed below.
+## What is this repo?
 
-## Quick Start & Documentation
+Control Tower exposes real-time events (created, modified, deleted) for entities such as loads, stops, and customers. This repo provides:
 
-[Nx Documentation](https://nx.dev/angular)
+1. **`@firebend/control-tower-web-socket-client`** — a TypeScript client library that wraps SignalR and handles reconnection, token refresh, transport fallback, and subscription recovery.
+2. **`ct-rte-ws-sample`** — an Angular app that demonstrates how to authenticate with Auth0 and subscribe to real-time events using the library.
+3. **Nx workspace tooling** — build, test, lint, and publish targets for the library and sample app.
 
-[10-minute video showing all Nx features](https://nx.dev/getting-started/intro)
+## Repository layout
 
-[Interactive Tutorial](https://nx.dev/tutorial/01-create-application)
+```text
+├── apps/
+│   └── ct-rte-ws-sample/     # Angular sample application
+├── libs/
+│   └── web-socket-client/     # The @firebend/control-tower-web-socket-client package
+├── tools/
+│   └── scripts/
+│       └── publish.mjs         # Helper script for publishing the library
+├── nx.json                     # Nx workspace configuration
+├── package.json                # Workspace dependencies and scripts
+└── README.md                   # This file
+```
 
-## Adding capabilities to your workspace
+## Prerequisites
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+- [Node.js](https://nodejs.org/) — the version pinned by the workspace is in `package.json` (use the latest active LTS that matches the Angular/Nx versions in the repo).
+- [npm](https://www.npmjs.com/) — this repo uses npm exclusively (`npm install` is enforced via `only-allow`).
+- An Auth0 account and a Control Tower Platform real-time events endpoint if you want to run the sample app against a live backend.
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
+## Getting started
 
-Below are our core plugins:
+Clone the repo and install dependencies:
 
-- [Angular](https://angular.io)
-  - `ng add @nx/angular`
-- [React](https://reactjs.org)
-  - `ng add @nrwl/react`
-- Web (no framework frontends)
-  - `ng add @nrwl/web`
-- [Nest](https://nestjs.com)
-  - `ng add @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `ng add @nrwl/express`
-- [Node](https://nodejs.org)
-  - `ng add @nrwl/node`
+```bash
+git clone https://github.com/firebend/control-tower-web-sockets.git
+cd control-tower-web-sockets
+npm install
+```
 
-There are also many [community plugins](https://nx.dev/community) you could add.
+> The `postinstall` script decorates the Angular CLI for Nx computation caching. This is expected and safe.
 
-## Generate an application
+## Using the web-socket-client library
 
-Run `ng g @nx/angular:app my-app` to generate an application.
+The library is published as `@firebend/control-tower-web-socket-client`. You can import it from another package or use it directly from this workspace via the `@ct-rte-ws/web-socket-client` path alias.
 
-> You can use any of the plugins above to generate applications as well.
+### Basic connection
 
-When using Nx, you can create multiple applications and libraries in the same workspace.
+```typescript
+import {
+  realTimeEventFactory,
+  HttpTransportType,
+} from '@firebend/control-tower-web-socket-client';
 
-## Generate a library
+const builder = await realTimeEventFactory(
+  'https://platform-qa.controltower.tech/events/signalr'
+)
+  .withAccessToken(() => getJwtToken()) // string, Promise<string>, or factory
+  .withTransport(HttpTransportType.WebSockets | HttpTransportType.LongPolling)
+  .withAutomaticReconnect([0, 2000, 10000, 30000, 60000])
+  .withKeepAliveInterval(10000)
+  .withServerTimeout(30000)
+  .startAsync();
 
-Run `ng g @nx/angular:lib my-lib` to generate a library.
+// Listen to all triggers for an entity
+builder.onAll('loads', (event) => {
+  console.log('Load event:', event.trigger, event.entity);
+});
+```
 
-> You can also use any of the plugins above to generate libraries as well.
+### Builder options
 
-Libraries are shareable across libraries and applications. They can be imported from `@ct-rte-ws/mylib`.
+All options have sensible defaults and can be chained:
 
-## Development server
+| Method | Default | Purpose |
+|--------|---------|---------|
+| `withAccessToken(token)` | none | Token string, promise, or factory. Factories are re-invoked on reconnect so you can refresh expired tokens. |
+| `withTransport(transport)` | `WebSockets \| LongPolling` | SignalR transport(s) to use. |
+| `withAutomaticReconnect(delays)` | `[0, 2000, 10000, 30000, 60000]` | Retry delays in milliseconds. |
+| `withKeepAliveInterval(ms)` | `10000` | Ping interval. |
+| `withServerTimeout(ms)` | `30000` | Server timeout. |
+| `withCloseHandler(handler)` | `console.error` | Callback invoked when the connection is permanently closed. |
 
-Run `ng serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+### Listening to specific triggers
 
-## Code scaffolding
+```typescript
+builder.on('loads', (b) =>
+  b
+    .onTrigger('Created')
+    .onTrigger('Modified', (filters) =>
+      filters
+        .withFilter('/loadStatus')
+        .withFilter('/stops/*')
+    )
+    .withEventHandler((event) => {
+      console.log('Load updated:', event);
+    })
+);
+```
 
-Run `ng g component my-component --project=my-app` to generate a new component.
+For more library examples, see [`libs/web-socket-client/README.md`](./libs/web-socket-client/README.md).
 
-## Build
+## Developing on the library
 
-Run `ng build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+The library source lives in `libs/web-socket-client/src`.
 
-## Running unit tests
+### Build
 
-Run `ng test my-app` to execute the unit tests via [Jest](https://jestjs.io).
+```bash
+npx nx build web-socket-client
+```
 
-Run `nx affected:test` to execute the unit tests affected by a change.
+Output is written to `dist/libs/web-socket-client`.
 
-## Understand your workspace
+### Test
 
-Run `nx graph` to see a diagram of the dependencies of your projects.
+```bash
+npx nx test web-socket-client
+```
 
-## Further help
+### Lint
 
-Visit the [Nx Documentation](https://nx.dev/angular) to learn more.
+```bash
+npx nx lint web-socket-client
+```
 
-## ☁ Nx Cloud
+### Local consumption
 
-### Distributed Computation Caching & Distributed Task Execution
+The root `package.json` references the library as a local file dependency:
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
+```json
+"@firebend/control-tower-web-socket-client": "file:libs/web-socket-client"
+```
 
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
+When you build the library, the sample app will consume the built output. The package version is read from `libs/web-socket-client/package.json`.
 
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
+### Publishing
 
-Visit [Nx Cloud](https://nx.app/) to learn more.
+Use the Nx publish target:
+
+```bash
+npx nx publish web-socket-client --ver=1.2.3 --tag=latest
+```
+
+This runs `tools/scripts/publish.mjs`, which builds the library and publishes the `dist/libs/web-socket-client` output.
+
+## Running the sample app
+
+The sample app demonstrates Auth0 login, connecting to the real-time events endpoint, and subscribing to entity events.
+
+### 1. Create the Auth0 configuration
+
+The sample app expects an Auth0 config file at `apps/ct-rte-ws-sample/src/environments/auth-config.ts`. This file is gitignored so you can keep secrets out of the repo.
+
+Create the file with your Auth0 domain, client ID, audience, and error path:
+
+```typescript
+// apps/ct-rte-ws-sample/src/environments/auth-config.ts
+export default {
+  domain: 'your-tenant.us.auth0.com',
+  clientId: 'your-client-id',
+  audience: 'https://your-control-tower-api',
+  errorPath: '/error',
+};
+```
+
+### 2. Set the real-time events endpoint
+
+The sample app connects to the Control Tower real-time events endpoint in `apps/ct-rte-ws-sample/src/app/pages/events/base.events.component.ts`:
+
+```typescript
+const eventBuilder = await realTimeEventFactory(
+  'https://platform-qa.controltower.tech/events/signalr'
+)
+  .withAccessToken(token.token)
+  .startAsync();
+```
+
+Update the URL to match your environment.
+
+### 3. Serve the app
+
+```bash
+npm start
+# or
+npx nx serve ct-rte-ws-sample
+```
+
+The dev server will start on `http://localhost:4200`.
+
+### 4. Build for production
+
+```bash
+npx nx build ct-rte-ws-sample
+```
+
+## Common commands
+
+| Command | Description |
+|---------|-------------|
+| `npm install` | Install dependencies. |
+| `npm start` | Serve the sample app. |
+| `npx nx test web-socket-client` | Run library unit tests. |
+| `npx nx test ct-rte-ws-sample` | Run sample app unit tests. |
+| `npx nx lint web-socket-client` | Lint the library. |
+| `npx nx lint ct-rte-ws-sample` | Lint the sample app. |
+| `npx nx build web-socket-client` | Build the library. |
+| `npx nx build ct-rte-ws-sample` | Build the sample app. |
+| `npx nx run-many --target=test --all` | Run all tests. |
+| `npx nx affected --target=test` | Run affected tests. |
+
+## Troubleshooting
+
+### `Required property 'buildTarget' is missing`
+
+The Angular dev-server target uses `buildTarget` instead of the older `browserTarget`. If you see this error after a migration, verify the `serve` and `extract-i18n` targets in `apps/ct-rte-ws-sample/project.json` use `buildTarget`.
+
+### `Cannot find module './auth-config'`
+
+The sample app requires `apps/ct-rte-ws-sample/src/environments/auth-config.ts`. Create that file with your Auth0 settings (see [Running the sample app](#running-the-sample-app)).
+
+### Token expiration
+
+If your connection drops and reconnects after the token expires, pass a token factory to `withAccessToken`:
+
+```typescript
+.withAccessToken(() => authService.getAccessTokenSilently())
+```
+
+SignalR calls the factory each time it needs a token.
+
+## Publishing
+
+See the [Publishing](#publishing) section above. Ensure you have npm publish permissions for the `@firebend` scope and that the version in `libs/web-socket-client/package.json` is correct.

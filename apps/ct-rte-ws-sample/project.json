@@ -4,6 +4,7 @@
   "projectType": "application",
   "sourceRoot": "apps/ct-rte-ws-sample/src",
   "prefix": "ct-rte-ws",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
@@ -31,8 +32,8 @@
           "budgets": [
             {
               "type": "initial",
-              "maximumWarning": "500kb",
-              "maximumError": "1mb"
+              "maximumWarning": "1mb",
+              "maximumError": "1.5mb"
             },
             {
               "type": "anyComponentStyle",
@@ -63,22 +64,23 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "ct-rte-ws-sample:build:production"
+          "buildTarget": "ct-rte-ws-sample:build:production"
         },
         "development": {
-          "browserTarget": "ct-rte-ws-sample:build:development"
+          "buildTarget": "ct-rte-ws-sample:build:development"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "continuous": true
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "ct-rte-ws-sample:build"
+        "buildTarget": "ct-rte-ws-sample:build"
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": [
           "apps/ct-rte-ws-sample/src/**/*.ts",
@@ -92,9 +94,9 @@
       "options": {
         "jestConfig": "apps/ct-rte-ws-sample/jest.config.js",
         "passWithNoTests": true,
-        "webWorkerTsConfig": "apps/ct-rte-ws-sample/tsconfig.worker.json"
+        "webWorkerTsConfig": "apps/ct-rte-ws-sample/tsconfig.worker.json",
+        "tsConfig": "apps/ct-rte-ws-sample/tsconfig.spec.json"
       }
     }
-  },
-  "tags": []
+  }
 }

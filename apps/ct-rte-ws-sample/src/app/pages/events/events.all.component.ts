@@ -6,14 +6,14 @@ import { BaseEventsComponent } from './base.events.component';
   selector: 'ct-rte-ws-events-all',
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.scss'],
+  standalone: false,
 })
 export class EventsAllComponent extends BaseEventsComponent {
-    override async subscribeToEvents(connectionBuilder : RealTimeEventsConnectionBuilder): Promise<void> {
+  override async subscribeToEvents(
+    connectionBuilder: RealTimeEventsConnectionBuilder,
+  ): Promise<void> {
+    this.title.set('Listening for all events');
 
-    this.title$.next('Listening for all events');
-
-    connectionBuilder.onAll('loads', (event) =>
-      this.loadEventHandler(event, this.realTimeEvents$)
-    );
+    connectionBuilder.onAll('loads', (event) => this.loadEventHandler(event));
   }
 }

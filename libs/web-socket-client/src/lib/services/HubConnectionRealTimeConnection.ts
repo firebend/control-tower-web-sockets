@@ -10,7 +10,7 @@ export class HubConnectionRealTimeConnection implements IRealTimeConnection {
   private _hubConnection: HubConnection;
 
   constructor(hubConnection: HubConnection) {
-    if(!hubConnection){
+    if (!hubConnection) {
       throw 'A hubConnection is required';
     }
 
@@ -26,7 +26,7 @@ export class HubConnectionRealTimeConnection implements IRealTimeConnection {
   }
 
   registerForEventAsync(
-    request: ISubscriptionViewModelCreate
+    request: ISubscriptionViewModelCreate,
   ): Promise<IModelSateResult<ISubscriptionViewModelRead>> {
     return this._hubConnection.invoke<
       IModelSateResult<ISubscriptionViewModelRead>
@@ -34,17 +34,17 @@ export class HubConnectionRealTimeConnection implements IRealTimeConnection {
   }
 
   unregisterForEventAsync(
-    subscriptionId: string
+    subscriptionId: string,
   ): Promise<IResult<ISubscriptionViewModelRead>> {
     return this._hubConnection.invoke<IResult<ISubscriptionViewModelRead>>(
       'unregisterEventSubscription',
-      subscriptionId
+      subscriptionId,
     );
   }
 
   addEventHandler<T>(
     eventName: string,
-    callback: (event: RealTimeEvent<T>) => void
+    callback: (event: RealTimeEvent<T>) => void,
   ): void {
     this._hubConnection.on(eventName, callback);
   }
@@ -55,5 +55,9 @@ export class HubConnectionRealTimeConnection implements IRealTimeConnection {
 
   onReconnected(callback: () => void): void {
     this._hubConnection.onreconnected(callback);
+  }
+
+  onClose(callback: (error?: Error) => void): void {
+    this._hubConnection.onclose(callback);
   }
 }

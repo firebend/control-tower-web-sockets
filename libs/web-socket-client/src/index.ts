@@ -1,3 +1,5 @@
+export { HttpTransportType } from '@microsoft/signalr';
+
 //errors
 export * from './lib/errors/EventSubscriptionError';
 

@@ -30,16 +30,19 @@ addEventListener('message', async (event) => {
 
       if (jwtMessage.token) {
         const eventBuilder = await realTimeEventFactory(
-          'https://platform-qa.controltower.tech/events/signalr'
+          'https://platform-qa.controltower.tech/events/signalr',
         )
           .withAccessToken(jwtMessage.token)
           .startAsync();
 
         postMessage(new ConnectedMessage());
 
-        eventBuilder.onAll('loads', (realTimeEvent: RealTimeEvent<unknown>) => {
-          postMessage(new RealTimeEventMessage(realTimeEvent));
-        });
+        eventBuilder.onAll(
+          'projects',
+          (realTimeEvent: RealTimeEvent<unknown>) => {
+            postMessage(new RealTimeEventMessage(realTimeEvent));
+          },
+        );
 
         console.log('Web Worker is configured to listen to real time events!');
       }

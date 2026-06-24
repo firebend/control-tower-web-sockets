@@ -4,10 +4,11 @@
 import { AuthConfig } from '@auth0/auth0-angular';
 import config from './auth-config';
 
-const { domain, clientId, audience, errorPath } = config as {
+const { domain, clientId, audience, errorPath, organization } = config as {
   domain: string;
   clientId: string;
   audience?: string;
+  organization?: string;
   errorPath: string;
 };
 
@@ -19,6 +20,7 @@ export const environment = {
     authorizationParams: {
       redirect_uri: window.location.origin,
       audience,
+      organization: organization,
     },
     errorPath,
   } as AuthConfig,

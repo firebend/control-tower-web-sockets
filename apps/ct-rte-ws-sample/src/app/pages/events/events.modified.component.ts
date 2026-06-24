@@ -6,16 +6,17 @@ import { BaseEventsComponent } from './base.events.component';
   selector: 'ct-rte-ws-events-modified',
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.scss'],
+  standalone: false,
 })
 export class EventsModifiedComponent extends BaseEventsComponent {
   override async subscribeToEvents(
-    connectionBuilder: RealTimeEventsConnectionBuilder
+    connectionBuilder: RealTimeEventsConnectionBuilder,
   ): Promise<void> {
-    this.title$.next('Listening only for modified events');
+    this.title.set('Listening only for modified events');
 
     connectionBuilder.on('loads', (x) => {
       x.onTrigger('Modified').withEventHandler((event) =>
-        this.loadEventHandler(event, this.realTimeEvents$)
+        this.loadEventHandler(event),
       );
     });
   }

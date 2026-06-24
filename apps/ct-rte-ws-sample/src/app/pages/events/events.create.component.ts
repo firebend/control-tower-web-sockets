@@ -6,16 +6,17 @@ import { BaseEventsComponent } from './base.events.component';
   selector: 'ct-rte-ws-events-create',
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.scss'],
+  standalone: false,
 })
 export class EventsCreateComponent extends BaseEventsComponent {
   override async subscribeToEvents(
-    connectionBuilder: RealTimeEventsConnectionBuilder
+    connectionBuilder: RealTimeEventsConnectionBuilder,
   ): Promise<void> {
-    this.title$.next('Listening only for created events');
+    this.title.set('Listening only for created events');
 
     connectionBuilder.on('loads', (x) => {
       x.onTrigger('Created').withEventHandler((event) =>
-        this.loadEventHandler(event, this.realTimeEvents$)
+        this.loadEventHandler(event),
       );
     });
   }
