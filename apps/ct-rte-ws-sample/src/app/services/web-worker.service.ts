@@ -19,7 +19,7 @@ export class WebWorkerService {
   constructor(
     authService: AuthService,
     toastService: ToastService,
-    workerFactory: EventsWorkerFactoryService
+    workerFactory: EventsWorkerFactoryService,
   ) {
     this._authService = authService;
     this._toastService = toastService;
@@ -34,7 +34,7 @@ export class WebWorkerService {
         new ToastModel({
           message: 'Web workers are not supported in this environment.',
           className: 'bg-danger text-light',
-        } as ToastModel)
+        } as ToastModel),
       );
     }
   }
@@ -43,10 +43,11 @@ export class WebWorkerService {
    * Waits for a token to be available and then creates the worker.
    */
   private _startWorker() {
-    this._authService.idTokenClaims$
+    this._authService
+      .getAccessTokenSilently()
       .pipe(
-        map((x) => ({ token: x?.__raw ?? '' })),
-        filter((x) => !!x.token)
+        map((x) => ({ token: x ?? '' })),
+        filter((x) => !!x.token),
       )
       .subscribe((x) => {
         this.initializeWorker(x.token);
@@ -90,7 +91,7 @@ export class WebWorkerService {
         message:
           'The web worker is connected to the real time event service! Any events received will be displayed in the console and here as toasts!',
         className: 'bg-success text-light',
-      } as ToastModel)
+      } as ToastModel),
     );
   }
 
@@ -112,11 +113,11 @@ export class WebWorkerService {
           realTimeEvent.event.trigger == 'Created'
             ? 'bg-success text-light'
             : realTimeEvent.event.trigger == 'Modified'
-            ? 'bg-info text-light'
-            : realTimeEvent.event.trigger == 'Deleted'
-            ? 'bg-danger text-light'
-            : '',
-      } as ToastModel)
+              ? 'bg-info text-light'
+              : realTimeEvent.event.trigger == 'Deleted'
+                ? 'bg-danger text-light'
+                : '',
+      } as ToastModel),
     );
   }
 }

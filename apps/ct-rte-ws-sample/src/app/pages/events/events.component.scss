@@ -1,10 +1,15 @@
 .events-container {
-  height: 600px;
-  overflow: auto;
-  display: flex;
-  flex-direction: column-reverse
+  min-height: 300px;
+  max-height: calc(100vh - 300px);
+  overflow-y: auto;
+  padding-right: 0.5rem;
 }
 
-.events-list {
-  flex: 1 1 0
+.list-group-item {
+  cursor: pointer;
+}
+
+.list-group-item a {
+  cursor: pointer;
+  color: var(--bs-primary);
 }

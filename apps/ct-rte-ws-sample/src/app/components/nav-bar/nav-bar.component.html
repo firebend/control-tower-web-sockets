@@ -1,5 +1,5 @@
 <div class="nav-container">
-  <nav class="navbar-expand-md">
+  <nav class="navbar navbar-expand-md">
     <img src="/assets/ct-logo-white.png" alt="Control Tower" class="ct-logo" />
     <div class="container">
       <button
@@ -24,6 +24,11 @@
           <li class="nav-item">
             <a routerLink="/" class="nav-link">Home</a>
           </li>
+          @if (auth.isAuthenticated$ | async) {
+            <li class="nav-item">
+              <a routerLink="/events-all" class="nav-link">Events</a>
+            </li>
+          }
         </ul>
 
         <ul class="navbar-nav d-none d-md-block">
@@ -55,7 +60,7 @@
                   [src]="user.picture"
                   alt="Profile picture"
                   class="nav-user-profile rounded-circle"
-                  style="width: 75px"
+                  style="width: 36px; height: 36px; object-fit: cover"
                 />
               </a>
               <div class="dropdown-menu dropdown-menu-left" ngbDropdownMenu>
@@ -127,7 +132,7 @@
         @if (auth.user$ | async; as user) {
           <ul
             class="navbar-nav d-md-none justify-content-between"
-            style="min-height: 170px"
+            style="min-height: 250px"
           >
             <li class="nav-item">
               <span class="user-info">
@@ -145,6 +150,22 @@
             <li>
               <fa-icon [icon]="faUser" class="mr-3"></fa-icon>
               <a routerLink="/profile">Profile</a>
+            </li>
+            <li>
+              <fa-icon [icon]="faBoltLightning" class="mr-3"></fa-icon>
+              <a routerLink="/events-all">All Events</a>
+            </li>
+            <li>
+              <fa-icon [icon]="faPlusCircle" class="mr-3"></fa-icon>
+              <a routerLink="/events-create">Created Events</a>
+            </li>
+            <li>
+              <fa-icon [icon]="faArrowsToCircle" class="mr-3"></fa-icon>
+              <a routerLink="/events-modified">Modified Events</a>
+            </li>
+            <li>
+              <fa-icon [icon]="faFilter" class="mr-3"></fa-icon>
+              <a routerLink="/events-modified-filter">Filtered Events</a>
             </li>
             <li>
               <fa-icon [icon]="faPowerOff" class="mr-3"></fa-icon>

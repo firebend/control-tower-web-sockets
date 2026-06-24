@@ -12,10 +12,8 @@ export class EventsAllComponent extends BaseEventsComponent {
   override async subscribeToEvents(
     connectionBuilder: RealTimeEventsConnectionBuilder,
   ): Promise<void> {
-    this.title$.next('Listening for all events');
+    this.title.set('Listening for all events');
 
-    connectionBuilder.onAll('loads', (event) =>
-      this.loadEventHandler(event, this.realTimeEvents$),
-    );
+    connectionBuilder.onAll('loads', (event) => this.loadEventHandler(event));
   }
 }

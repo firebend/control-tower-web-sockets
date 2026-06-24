@@ -12,11 +12,11 @@ export class EventsModifiedComponent extends BaseEventsComponent {
   override async subscribeToEvents(
     connectionBuilder: RealTimeEventsConnectionBuilder,
   ): Promise<void> {
-    this.title$.next('Listening only for modified events');
+    this.title.set('Listening only for modified events');
 
     connectionBuilder.on('loads', (x) => {
       x.onTrigger('Modified').withEventHandler((event) =>
-        this.loadEventHandler(event, this.realTimeEvents$),
+        this.loadEventHandler(event),
       );
     });
   }

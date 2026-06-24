@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 
 import {
@@ -8,7 +8,7 @@ import {
   RealTimeEventsConnectionBuilder,
 } from '@ct-rte-ws/web-socket-client';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BehaviorSubject, filter, firstValueFrom, interval, map } from 'rxjs';
+import { filter, firstValueFrom, interval, map } from 'rxjs';
 import { EventModalComponent } from '../../components/event-modal/event-modal.component';
 
 @Component({
@@ -24,9 +24,11 @@ export class BaseEventsComponent implements OnInit, OnDestroy {
 
   private _connection: IRealTimeConnection | undefined;
 
-  public title$ = new BehaviorSubject<string>('');
+  public title = signal('');
+  public isLoading = signal(true);
+  public error = signal<string | undefined>(undefined);
 
-  realTimeEvents$ = new BehaviorSubject<RealTimeEvent<unknown>[]>([]);
+  realTimeEvents = signal<RealTimeEvent<unknown>[]>([]);
 
   constructor(authService: AuthService, ngbModal: NgbModal) {
     this._authService = authService;
@@ -38,10 +40,24 @@ export class BaseEventsComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    if (this._doMockEvents) {
-      this.mockEvents();
-    } else {
-      await this._startWebSocketListener();
+    this.isLoading.set(true);
+    this.error.set(undefined);
+    this.title.set('Real-time Events');
+
+    try {
+      if (this._doMockEvents) {
+        this.mockEvents();
+      } else {
+        await this._startWebSocketListener();
+      }
+    } catch (err) {
+      this.error.set(
+        err instanceof Error
+          ? err.message
+          : 'Failed to connect to real-time events',
+      );
+    } finally {
+      this.isLoading.set(false);
     }
   }
 
@@ -50,19 +66,16 @@ export class BaseEventsComponent implements OnInit, OnDestroy {
    */
   mockEvents() {
     interval(1_000).subscribe(() => {
-      this.loadEventHandler(
-        {
-          trigger: 'Created',
-          entity: {
-            loadNumber: '1',
-          },
-          eventName: 'loads',
-          eventTime: new Date().toISOString(),
-          fieldChanges: [],
-          eventType: 'faked',
+      this.loadEventHandler({
+        trigger: 'Created',
+        entity: {
+          loadNumber: '1',
         },
-        this.realTimeEvents$,
-      );
+        eventName: 'loads',
+        eventTime: new Date().toISOString(),
+        fieldChanges: [],
+        eventType: 'faked',
+      });
     });
   }
 
@@ -102,14 +115,10 @@ export class BaseEventsComponent implements OnInit, OnDestroy {
   /**
    * The event handler for when a load event is triggered
    * @param event the real time event that triggered
-   * @param sub the behavior subject to push the event onto a list so that the front end updates
    */
-  protected loadEventHandler(
-    event: RealTimeEvent<unknown>,
-    sub: BehaviorSubject<RealTimeEvent<unknown>[]>,
-  ) {
+  protected loadEventHandler(event: RealTimeEvent<unknown>) {
     console.log('Loaded event', event);
-    sub.next([...sub.getValue(), ...[event]]);
+    this.realTimeEvents.update((events) => [...events, event]);
   }
 
   /**
@@ -118,8 +127,8 @@ export class BaseEventsComponent implements OnInit, OnDestroy {
    */
   protected async getTokenAsync(): Promise<{ token: string }> {
     const token = await firstValueFrom(
-      this._authService.idTokenClaims$.pipe(
-        map((x) => ({ token: x?.__raw ?? '' })),
+      this._authService.getAccessTokenSilently().pipe(
+        map((x) => ({ token: x ?? '' })),
         filter((x) => !!x.token),
       ),
     );
