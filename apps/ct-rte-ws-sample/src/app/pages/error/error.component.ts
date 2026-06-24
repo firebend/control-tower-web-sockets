@@ -5,8 +5,9 @@ import { Observable, timer } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'ct-rte-ws--error',
-  templateUrl: './error.component.html',
+    selector: 'ct-rte-ws--error',
+    templateUrl: './error.component.html',
+    standalone: false
 })
 export class ErrorComponent implements OnInit {
   public error$: Observable<Error> = this.auth.error$;

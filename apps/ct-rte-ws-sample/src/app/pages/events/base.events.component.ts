@@ -12,9 +12,10 @@ import { BehaviorSubject, filter, firstValueFrom, interval, map } from 'rxjs';
 import { EventModalComponent } from '../../components/event-modal/event-modal.component';
 
 @Component({
-  selector: 'ct-rte-ws-events-base',
-  templateUrl: './events.component.html',
-  styleUrls: ['./events.component.scss'],
+    selector: 'ct-rte-ws-events-base',
+    templateUrl: './events.component.html',
+    styleUrls: ['./events.component.scss'],
+    standalone: false
 })
 export class BaseEventsComponent implements OnInit, OnDestroy {
   private readonly _authService: AuthService;
