@@ -10,7 +10,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '@auth0/auth0-angular';
 
-
 @Component({
   selector: 'ct-rte-ws-nav-bar',
   templateUrl: './nav-bar.component.html',
