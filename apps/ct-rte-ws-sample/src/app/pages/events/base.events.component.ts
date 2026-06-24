@@ -12,10 +12,10 @@ import { BehaviorSubject, filter, firstValueFrom, interval, map } from 'rxjs';
 import { EventModalComponent } from '../../components/event-modal/event-modal.component';
 
 @Component({
-    selector: 'ct-rte-ws-events-base',
-    templateUrl: './events.component.html',
-    styleUrls: ['./events.component.scss'],
-    standalone: false
+  selector: 'ct-rte-ws-events-base',
+  templateUrl: './events.component.html',
+  styleUrls: ['./events.component.scss'],
+  standalone: false,
 })
 export class BaseEventsComponent implements OnInit, OnDestroy {
   private readonly _authService: AuthService;
@@ -61,7 +61,7 @@ export class BaseEventsComponent implements OnInit, OnDestroy {
           fieldChanges: [],
           eventType: 'faked',
         },
-        this.realTimeEvents$
+        this.realTimeEvents$,
       );
     });
   }
@@ -74,7 +74,7 @@ export class BaseEventsComponent implements OnInit, OnDestroy {
     const token = await this.getTokenAsync();
 
     const eventBuilder = await realTimeEventFactory(
-      'https://platform-qa.controltower.tech/events/signalr'
+      'https://platform-qa.controltower.tech/events/signalr',
     )
       .withAccessToken(token.token)
       .startAsync();
@@ -92,7 +92,7 @@ export class BaseEventsComponent implements OnInit, OnDestroy {
    */
   protected subscribeToEvents(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    connectionBuilder: RealTimeEventsConnectionBuilder
+    connectionBuilder: RealTimeEventsConnectionBuilder,
   ): Promise<void> {
     return new Promise<void>((resolve) => {
       resolve();
@@ -106,7 +106,7 @@ export class BaseEventsComponent implements OnInit, OnDestroy {
    */
   protected loadEventHandler(
     event: RealTimeEvent<unknown>,
-    sub: BehaviorSubject<RealTimeEvent<unknown>[]>
+    sub: BehaviorSubject<RealTimeEvent<unknown>[]>,
   ) {
     console.log('Loaded event', event);
     sub.next([...sub.getValue(), ...[event]]);
@@ -120,8 +120,8 @@ export class BaseEventsComponent implements OnInit, OnDestroy {
     const token = await firstValueFrom(
       this._authService.idTokenClaims$.pipe(
         map((x) => ({ token: x?.__raw ?? '' })),
-        filter((x) => !!x.token)
-      )
+        filter((x) => !!x.token),
+      ),
     );
 
     return token;

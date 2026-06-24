@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
-    selector: 'ct-rte-ws--profile',
-    templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.css'],
-    standalone: false
+  selector: 'ct-rte-ws--profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css'],
+  standalone: false,
 })
 export class ProfileComponent implements OnInit {
   profileJson = '';
@@ -14,7 +14,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.auth.user$.subscribe(
-      (profile) => (this.profileJson = JSON.stringify(profile, null, 2))
+      (profile) => (this.profileJson = JSON.stringify(profile, null, 2)),
     );
   }
 }

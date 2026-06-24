@@ -5,14 +5,17 @@ import { Observable, timer } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-    selector: 'ct-rte-ws--error',
-    templateUrl: './error.component.html',
-    standalone: false
+  selector: 'ct-rte-ws--error',
+  templateUrl: './error.component.html',
+  standalone: false,
 })
 export class ErrorComponent implements OnInit {
   public error$: Observable<Error> = this.auth.error$;
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+  ) {}
 
   ngOnInit() {
     timer(0)

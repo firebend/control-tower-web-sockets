@@ -1,7 +1,8 @@
-<div class="container" *ngIf="auth.isLoading$ | async; else loaded">
-  <ct-rte-ws-loading></ct-rte-ws-loading>
-</div>
-
-<ng-template #loaded>
+@if (auth.isLoading$ | async) {
+  <div class="container">
+    <ct-rte-ws-loading></ct-rte-ws-loading>
+  </div>
+} @else {
   <ct-rte-ws-home-content></ct-rte-ws-home-content>
-</ng-template>
+}
+

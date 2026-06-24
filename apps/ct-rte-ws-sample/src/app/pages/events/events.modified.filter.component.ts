@@ -3,22 +3,22 @@ import { RealTimeEventsConnectionBuilder } from '@ct-rte-ws/web-socket-client';
 import { BaseEventsComponent } from './base.events.component';
 
 @Component({
-    selector: 'ct-rte-ws-events-modified',
-    templateUrl: './events.component.html',
-    styleUrls: ['./events.component.scss'],
-    standalone: false
+  selector: 'ct-rte-ws-events-modified',
+  templateUrl: './events.component.html',
+  styleUrls: ['./events.component.scss'],
+  standalone: false,
 })
 export class EventsModifiedFilterComponent extends BaseEventsComponent {
   override async subscribeToEvents(
-    connectionBuilder: RealTimeEventsConnectionBuilder
+    connectionBuilder: RealTimeEventsConnectionBuilder,
   ): Promise<void> {
     this.title$.next('Listening only for modified events with a given filter');
 
     connectionBuilder.on('loads', (x) => {
       x.onTrigger('Modified', (trigger) =>
-        trigger.withFilter('/loadStatus/*')
+        trigger.withFilter('/loadStatus/*'),
       ).withEventHandler((event) =>
-        this.loadEventHandler(event, this.realTimeEvents$)
+        this.loadEventHandler(event, this.realTimeEvents$),
       );
     });
   }
