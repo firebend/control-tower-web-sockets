@@ -25,8 +25,8 @@ echo "Release Type: $RELEASE_TYPE"
 DRY_RUN=${DRY_RUN:-"False"}
 echo "Dry Run: $DRY_RUN"
 
-AFFECTED=$(node_modules/.bin/nx show projects --affected --type=lib)
-echo "Affected Libraries: $AFFECTED"
+AFFECTED=$(node_modules/.bin/nx show projects --type=lib)
+echo "Libraries to publish: $AFFECTED"
 
 if [ "$AFFECTED" != "" ]; then
   cd "$PARENT_DIR"

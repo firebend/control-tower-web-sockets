@@ -41,7 +41,11 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add -A
-        git commit -m "Release [skip-ci]" --no-verify
+        if git diff --cached --quiet; then
+          echo "No changes to commit after release"
+        else
+          git commit -m "Release [skip-ci]" --no-verify
+        fi
 
     - name: Push changes
       uses: ad-m/github-push-action@v0.8.0
