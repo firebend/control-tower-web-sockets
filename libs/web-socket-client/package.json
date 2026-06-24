@@ -1,12 +1,15 @@
 {
   "name": "@firebend/control-tower-web-socket-client",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "A library receiving Control Tower Platform real time events over a web socket",
   "homepage": "https://github.com/firebend/control-tower-web-sockets#readme",
   "bugs": {
     "url": "https://github.com/firebend/control-tower-web-sockets/issues"
   },
-  "repository": "github:firebend/control-tower-web-sockets",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/firebend/control-tower-web-sockets.git"
+  },
   "license": "MIT",
   "dependencies": {
     "@microsoft/signalr": "8.0.7"
