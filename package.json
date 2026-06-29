@@ -24,7 +24,7 @@
     "@angular/core": "^20.3.25",
     "@angular/forms": "^20.3.25",
     "@angular/localize": "^20.3.25",
-    "@angular/platform-browser": "^20.3.25",
+    "@angular/platform-browser": "^22.0.4",
     "@angular/platform-browser-dynamic": "^20.3.25",
     "@angular/router": "^20.3.25",
     "@auth0/auth0-angular": "2.2.3",
