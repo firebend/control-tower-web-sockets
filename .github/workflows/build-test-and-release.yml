@@ -38,24 +38,15 @@ jobs:
     #   if: env.flag
     #   run: npm run docs ./libs/web-socket-client/src/index.ts --tsconfig ./libs/web-socket-client/tsconfig.lib.json
 
-    - name: Commit files
+    # No commit-back to main: branch protection requires a pull request, so
+    # GITHUB_TOKEN cannot push there (GH006) and every release run failed on it.
+    # pub.sh bumps from the registry, so the version in git no longer matters.
+    # The tag from `npm version` is the only thing worth publishing back.
+    - name: Push release tag
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add -A
-        if git diff --cached --quiet; then
-          echo "No changes to commit after release"
-        else
-          git commit -m "Release [skip-ci]" --no-verify
-        fi
-
-    - name: Push changes
-      uses: ad-m/github-push-action@v1.1.0
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: ${{ github.ref }}
-        tags: true
-        force: true
+        git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" --tags
   empty:
     runs-on: ubuntu-latest
     if: success()

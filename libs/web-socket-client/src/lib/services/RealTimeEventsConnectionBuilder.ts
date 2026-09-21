@@ -20,6 +20,7 @@ export class RealTimeEventsConnectionBuilder {
   private _serverTimeout = 30000;
   private _transport =
     HttpTransportType.WebSockets | HttpTransportType.LongPolling;
+  private _withCredentials = true;
   private _closeHandler?: (error?: Error) => void;
   private _connection!: IRealTimeConnection;
   private _builders: RealTimeEventBuilder[] = [];
@@ -98,6 +99,23 @@ export class RealTimeEventsConnectionBuilder {
   }
 
   /**
+   * Configures whether the browser sends credentials (cookies, TLS client
+   * certificates) with the negotiate request and subsequent transport calls.
+   *
+   * Defaults to true, matching SignalR's own default. Set false when the hub
+   * is authenticated with a bearer token rather than a cookie: a credentialed
+   * request forbids a wildcard `Access-Control-Allow-Origin` or
+   * `Access-Control-Allow-Headers`, so opting out lets a permissive CORS
+   * configuration serve the negotiate preflight.
+   * @param include whether to send credentials
+   * @returns RealTimeEventsConnectionBuilder
+   */
+  withCredentials(include: boolean): RealTimeEventsConnectionBuilder {
+    this._withCredentials = include;
+    return this;
+  }
+
+  /**
    * Configures a callback for when the connection is permanently closed.
    * @param handler the close handler
    * @returns RealTimeEventsConnectionBuilder
@@ -116,6 +134,7 @@ export class RealTimeEventsConnectionBuilder {
   async startAsync(): Promise<RealTimeEventsConnectionBuilder> {
     const urlOptions: IHttpConnectionOptions = {
       transport: this._transport,
+      withCredentials: this._withCredentials,
     };
 
     if (this._tokenFactory) {

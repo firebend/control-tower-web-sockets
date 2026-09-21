@@ -97,7 +97,31 @@ All options have sensible defaults and can be chained:
 | `withAutomaticReconnect(delays)` | `[0, 2000, 10000, 30000, 60000]` | Retry delays in milliseconds. |
 | `withKeepAliveInterval(ms)` | `10000` | Ping interval. |
 | `withServerTimeout(ms)` | `30000` | Server timeout. |
+| `withCredentials(include)` | `true` | Whether the browser sends credentials with negotiate and transport requests. See [Credentials and CORS](#credentials-and-cors). |
 | `withCloseHandler(handler)` | `console.error` | Callback invoked when the connection is permanently closed. |
+
+### Credentials and CORS
+
+SignalR sends credentials by default, and this library keeps that default. A
+credentialed cross-origin request forbids a wildcard in the server's
+`Access-Control-Allow-Origin` and `Access-Control-Allow-Headers` responses — the
+browser rejects the negotiate preflight outright, usually surfacing as an opaque
+network failure rather than a readable CORS error.
+
+If your hub is authenticated with a bearer token rather than a cookie,
+credentials mode buys you nothing, and opting out lets a permissive CORS
+configuration serve the preflight:
+
+```typescript
+const builder = await realTimeEventFactory(url)
+  .withAccessToken(() => getJwtToken())
+  .withCredentials(false)
+  .startAsync();
+```
+
+Leave it at the default when the hub relies on cookies or TLS client
+certificates, and make sure the server echoes the request origin instead of
+returning `*`.
 
 ### Listening to specific triggers
 

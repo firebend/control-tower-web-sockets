@@ -105,6 +105,42 @@ describe('RealTimeEventsConnectionBuilder', () => {
     Object.values(spies).forEach((spy) => spy.mockRestore());
   });
 
+  it('should send credentials by default', async () => {
+    const spies = createBuilderSpies();
+    const connectionMock = createConnectionMock();
+    spies.buildSpy.mockReturnValue(connectionMock);
+
+    const url = 'https://fake.com/events';
+
+    await new RealTimeEventsConnectionBuilder(url).startAsync();
+
+    expect(spies.withUrlSpy).toHaveBeenCalledWith(
+      url,
+      expect.objectContaining({ withCredentials: true }),
+    );
+
+    Object.values(spies).forEach((spy) => spy.mockRestore());
+  });
+
+  it('should omit credentials when the consumer opts out', async () => {
+    const spies = createBuilderSpies();
+    const connectionMock = createConnectionMock();
+    spies.buildSpy.mockReturnValue(connectionMock);
+
+    const url = 'https://fake.com/events';
+
+    await new RealTimeEventsConnectionBuilder(url)
+      .withCredentials(false)
+      .startAsync();
+
+    expect(spies.withUrlSpy).toHaveBeenCalledWith(
+      url,
+      expect.objectContaining({ withCredentials: false }),
+    );
+
+    Object.values(spies).forEach((spy) => spy.mockRestore());
+  });
+
   it('should start the connection without an access token', async () => {
     const spies = createBuilderSpies();
     const connectionMock = createConnectionMock();
