@@ -249,4 +249,17 @@ SignalR calls the factory each time it needs a token.
 
 ## Publishing
 
-See the [Publishing](#publishing) section above. Ensure you have npm publish permissions for the `@firebend` scope and that the version in `libs/web-socket-client/package.json` is correct.
+Releases are automatic. Merging to `main` runs `.github/workflows/build-test-and-release.yml`, which lints, tests, then calls `.github/scripts/pub.sh` to version, build, and publish the library to npm via OIDC trusted publishing. There is no token to manage and **no manual version bump** — do not edit `version` in `libs/web-socket-client/package.json` by hand.
+
+The release type comes from the commit subject on `main`. Squash merges use the pull request title, so the title decides the version:
+
+| Commit subject | Release |
+|----------------|---------|
+| `feat: ...` | minor |
+| `fix: ...`, `docs: ...`, `chore: ...`, any other conventional prefix | patch |
+| `feat!: ...`, `fix(api)!: ...`, or a body containing `BREAKING CHANGE` | major |
+| anything unrecognised | patch |
+
+The script bumps from the version currently on the registry rather than the one checked into the repo, so the `Release [skip-ci]` commit-back drifting out of sync cannot cause a duplicate-version publish.
+
+To rehearse a release without publishing, run the script with `DRY_RUN=True`. The manual `npx nx publish` target described under [Developing on the library](#publishing) remains as an escape hatch and should not be needed in normal use.

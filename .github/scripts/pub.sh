@@ -1,14 +1,23 @@
 #!/usr/bin/env bash
 set -o errexit -o noclobber -o nounset -o pipefail
 
+# Maps a conventional-commit subject to an npm release type.
+#
+# Prefixes are anchored, so prose containing "feature" or "fixes" no longer
+# decides the release. Anything unrecognised falls through to patch: a subject
+# that does not declare its intent should not silently widen the version.
 getBuildType() {
-  local release_type="minor"
-  if [[ "$1" == *"feat"* ]]; then
-    release_type="major"
-  elif [[ "$1" == *"fix"* || "$1" == *"docs"* || "$1" == *"chore"* ]]; then
-    release_type="patch"
+  local subject="$1"
+  local scope='(\([^)]*\))?'
+
+  if [[ "$subject" == *"BREAKING CHANGE"* ]] ||
+    [[ "$subject" =~ ^[a-z]+${scope}!: ]]; then
+    echo "major"
+  elif [[ "$subject" =~ ^feat${scope}: ]]; then
+    echo "minor"
+  else
+    echo "patch"
   fi
-  echo "$release_type"
 }
 
 PARENT_DIR="$PWD"
@@ -36,6 +45,21 @@ if [ "$AFFECTED" != "" ]; then
     echo "Setting version for $lib"
     cd "$PARENT_DIR"
     cd "$ROOT_DIR/libs/${lib}"
+
+    # Bump from what is actually on the registry, not from the checked-in
+    # version. The "Release [skip-ci]" commit-back is best effort and has
+    # drifted before, which makes the next bump recompute a version that is
+    # already published and fails the release.
+    PKG_NAME="$(node -p "require('./package.json').name")"
+    PUBLISHED_VERSION="$(npm view "$PKG_NAME" version 2>/dev/null || true)"
+
+    if [ -n "$PUBLISHED_VERSION" ]; then
+      echo "Registry has $PKG_NAME@$PUBLISHED_VERSION, bumping from there"
+      npm version "$PUBLISHED_VERSION" --allow-same-version --no-git-tag-version
+    else
+      echo "$PKG_NAME is unpublished, bumping from the checked-in version"
+    fi
+
     npm version "$RELEASE_TYPE" -f -m "Control Tower Web Sockets $RELEASE_TYPE"
     echo "Building $lib"
     cd "$PARENT_DIR"
