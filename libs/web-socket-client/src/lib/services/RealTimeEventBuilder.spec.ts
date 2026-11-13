@@ -14,6 +14,7 @@ describe('RealTimeEventBuilder', () => {
       onClose: jest.fn(),
       startAsync: jest.fn(),
       stopAsync: jest.fn(),
+      isConnected: jest.fn().mockReturnValue(true),
       unregisterForEventAsync: jest.fn(),
     };
 

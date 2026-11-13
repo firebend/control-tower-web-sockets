@@ -19,6 +19,12 @@ export interface IRealTimeConnection {
   stopAsync(): Promise<void>;
 
   /**
+   * Whether the connection is currently connected, as opposed to connecting,
+   * reconnecting, or disconnected.
+   */
+  isConnected(): boolean;
+
+  /**
    * Sends a request to register for a given event
    * @param request a model containing the request data
    */

@@ -158,9 +158,37 @@ export class RealTimeEventsConnectionBuilder {
     return this;
   }
 
-  private async _onReconnectedHandler() {
-    for (let i = 0; i < this._builders.length; i++) {
-      await this._builders[i].buildAsync();
+  /**
+   * Re-registers every subscription after SignalR reconnects. SignalR ignores
+   * the promise this returns, so it must never reject: a rejection here is an
+   * unhandled promise rejection in the consumer's app.
+   */
+  private async _onReconnectedHandler(): Promise<void> {
+    try {
+      for (let i = 0; i < this._builders.length; i++) {
+        await this._builders[i].buildAsync();
+      }
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error('Failed to re-register for events after reconnecting', e);
+
+      // The connection dropped again mid-registration: SignalR is reconnecting
+      // and calls this handler again once it is back.
+      if (!this._connection.isConnected()) {
+        return;
+      }
+
+      // Connected but missing subscriptions, so no events would arrive. Stop the
+      // connection so the close handler runs and the consumer can rebuild it.
+      try {
+        await this._connection.stopAsync();
+      } catch (stopError) {
+        // eslint-disable-next-line no-console
+        console.error(
+          'Failed to stop the real-time events connection',
+          stopError,
+        );
+      }
     }
   }
 
