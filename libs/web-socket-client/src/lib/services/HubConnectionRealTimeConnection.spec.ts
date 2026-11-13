@@ -1,4 +1,4 @@
-import { HubConnection } from '@microsoft/signalr';
+import { HubConnection, HubConnectionState } from '@microsoft/signalr';
 import { IRealTimeConnection } from '../interfaces/IRealTimeConnection';
 import { ISubscriptionViewModelCreate } from '../models/SubscriptionViewModelCreate';
 import { HubConnectionRealTimeConnection } from './HubConnectionRealTimeConnection';
@@ -24,6 +24,14 @@ describe('HubConnectionRealTimeConnection', () => {
   it('should start', async () => {
     await realTimeConnection.startAsync();
     expect(hubConnection.start).toHaveBeenCalled();
+  });
+
+  it('should report connected only in the Connected state', () => {
+    Object.assign(hubConnection, { state: HubConnectionState.Connected });
+    expect(realTimeConnection.isConnected()).toBe(true);
+
+    Object.assign(hubConnection, { state: HubConnectionState.Reconnecting });
+    expect(realTimeConnection.isConnected()).toBe(false);
   });
 
   it('should stop', async () => {

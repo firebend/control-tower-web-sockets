@@ -1,4 +1,4 @@
-import { HubConnection } from '@microsoft/signalr';
+import { HubConnection, HubConnectionState } from '@microsoft/signalr';
 import { IRealTimeConnection } from '../interfaces/IRealTimeConnection';
 import { IModelSateResult } from '../models/ModelStateResult';
 import { RealTimeEvent } from '../models/RealTimeEvent';
@@ -23,6 +23,10 @@ export class HubConnectionRealTimeConnection implements IRealTimeConnection {
 
   stopAsync(): Promise<void> {
     return this._hubConnection.stop();
+  }
+
+  isConnected(): boolean {
+    return this._hubConnection.state === HubConnectionState.Connected;
   }
 
   registerForEventAsync(
